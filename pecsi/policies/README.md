@@ -2,7 +2,7 @@
 
 ## Paranoia levels
 
-Within PECSi, the user will be able to choose between 5 presets "Paranoia Levels" and also create a new policy by operating on the GUI of PECSi. We are going to create 5 policy presets (in order of level of shared data):
+Within PECSi, the user will be able to choose between 5 presets "Paranoia Levels" and also create a new policy by operating on the GUI of PECSi. Here's the list of the 5 policy presets (in order of level of shared data):
 
 - **MAX**: quite all data shared, very-low level of privacy, max level of infotainment customization
 - **HIGH**: some basic adjustment of the amount of shared data, low level of privacy, high level infotainment customization
