@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Location",
+    "description": "Allows the app to track your location for enhanced navigation.",
+    "isEnabled": true
+  },
+  {
+    "name": "Personal Information",
+    "description": "Allows the app to access and use your personal information.",
+    "isEnabled": true
+  },
+  {
+    "name": "Financial Information",
+    "description": "Allows the app to access and use your financial information.",
+    "isEnabled": false
+  },
+  {
+    "name": "Health and Fitness",
+    "description": "Allows the app to access and use your health and fitness data.",
+    "isEnabled": true
+  },
+  {
+    "name": "Messages",
+    "description": "Allows the app to access and use your messages.",
+    "isEnabled": true
+  },
+  {
+    "name": "Photos and Videos",
+    "description": "Allows the app to access and use your photos and videos.",
+    "isEnabled": false
+  },
+  {
+    "name": "Files and Documents",
+    "description": "Allows the app to access and use your files and documents.",
+    "isEnabled": true
+  },
+  {
+    "name": "Calendar",
+    "description": "Allows the app to access and use your calendar.",
+    "isEnabled": true
+  },
+  {
+    "name": "Contacts",
+    "description": "Allows the app to access and use your contacts.",
+    "isEnabled": true
+  },
+  {
+    "name": "App Activity",
+    "description": "Allows the app to access and use information about your app activity.",
+    "isEnabled": false
+  },
+  {
+    "name": "App Interactions",
+    "description": "Allows the app to access and use information about your interactions with other apps.",
+    "isEnabled": true
+  },
+  {
+    "name": "In-App Search History",
+    "description": "Allows the app to access and use your in-app search history.",
+    "isEnabled": false
+  },
+  {
+    "name": "Installed Apps",
+    "description": "Allows the app to access and use information about installed apps.",
+    "isEnabled": true
+  },
+  {
+    "name": "Other User-Generated Content",
+    "description": "Allows the app to access and use other user-generated content.",
+    "isEnabled": true
+  },
+  {
+    "name": "Web Browsing",
+    "description": "Allows the app to access and use your web browsing history.",
+    "isEnabled": false
+  },
+  {
+    "name": "App Info and Performance",
+    "description": "Allows the app to access and use information about app performance.",
+    "isEnabled": true
+  },
+  {
+    "name": "Device or Other IDs",
+    "description": "Allows the app to access and use your device or other IDs.",
+    "isEnabled": true
+  }
+]

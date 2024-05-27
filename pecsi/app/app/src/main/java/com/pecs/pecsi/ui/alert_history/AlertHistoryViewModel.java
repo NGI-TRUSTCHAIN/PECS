@@ -1,16 +1,16 @@
-package com.pecs.pecsi.ui.slideshow;
+package com.pecs.pecsi.ui.alert_history;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class AlertHistoryViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public AlertHistoryViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is alert_history fragment");
     }
 
     public LiveData<String> getText() {

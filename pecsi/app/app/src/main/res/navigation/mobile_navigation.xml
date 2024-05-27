@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.pecs.pecsi.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_policy_settings"
+        android:name="com.pecs.pecsi.ui.policy_settings.PolicySettingsFragment"
+        android:label="@string/menu_policy_settings"
+        tools:layout="@layout/fragment_policy_settings" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.pecs.pecsi.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_alert_history"
+        android:name="com.pecs.pecsi.ui.alert_history.AlertHistoryFragment"
+        android:label="@string/menu_alert_history"
+        tools:layout="@layout/fragment_alert_history" />
 </navigation>
