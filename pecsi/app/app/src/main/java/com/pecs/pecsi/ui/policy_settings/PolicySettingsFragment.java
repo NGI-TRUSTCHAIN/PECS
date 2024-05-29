@@ -1,6 +1,7 @@
 package com.pecs.pecsi.ui.policy_settings;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PolicySettingsFragment extends Fragment {
+public class PolicySettingsFragment extends Fragment implements PolicySettingsAdapter.OnToggleChangeListener {
 
+    private PolicySettingsViewModel policySettingsViewModel;
     private RecyclerView recyclerView;
     private PolicySettingsAdapter adapter;
-    private List<PolicySettingsItem> settingsList;
+    private List<PolicySettingsItem> policySettingsList;
 
     public PolicySettingsFragment() {
         // Required empty public constructor
@@ -41,10 +43,10 @@ public class PolicySettingsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Initialize the settings list
-        settingsList = parsePolicySettingsFromJson();
+        policySettingsList = parsePolicySettingsFromJson();
 
         // Initialize the adapter
-        adapter = new PolicySettingsAdapter(settingsList);
+        adapter = new PolicySettingsAdapter(policySettingsList, this);
         recyclerView.setAdapter(adapter);
 
         return rootView;
@@ -71,6 +73,33 @@ public class PolicySettingsFragment extends Fragment {
             e.printStackTrace();
         }
         return policySettingsList;
+    }
+
+    @Override
+    public void onToggleChanged(int position, boolean isEnabled) {
+        PolicySettingsItem item = policySettingsList.get(position);
+        item.setEnabled(item.isEnabled());
+        sendPolicySettings();
+    }
+
+    private void sendPolicySettings() {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (PolicySettingsItem item : policySettingsList) {
+                JSONObject obj = new JSONObject();
+                obj.put("settingName", item.getName());
+                obj.put("settingDescription", item.getDescription());
+                obj.put("isEnabled", item.isEnabled());
+                jsonArray.put(obj);
+            }
+            JSONObject settings = new JSONObject();
+            settings.put("policySettings", jsonArray);
+            Log.i("OnToggleChanged", jsonArray.toString());
+            // TODO: Call SDK method to send the settings
+            // sendSettingsToComponent(settings);
+        } catch (JSONException e) {
+            Log.e("PolicySettingsFragment", "Error creating JSON", e);
+        }
     }
 
     public void onDestroyView() {

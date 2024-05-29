@@ -16,10 +16,12 @@ import java.util.List;
 
 public class PolicySettingsAdapter extends RecyclerView.Adapter<PolicySettingsAdapter.ViewHolder> {
 
-    private List<PolicySettingsItem> settingsList;
+    private List<PolicySettingsItem> policySettingsList;
+    private OnToggleChangeListener onToggleChangeListener;
 
-    public PolicySettingsAdapter(List<PolicySettingsItem> settingsList) {
-        this.settingsList = settingsList;
+    public PolicySettingsAdapter(List<PolicySettingsItem> policySettingsList, OnToggleChangeListener onToggleChangeListener) {
+        this.policySettingsList = policySettingsList;
+        this.onToggleChangeListener = onToggleChangeListener;
     }
 
     @NonNull
@@ -29,18 +31,25 @@ public class PolicySettingsAdapter extends RecyclerView.Adapter<PolicySettingsAd
         return new ViewHolder(view);
     }
 
+    public interface OnToggleChangeListener {
+        void onToggleChanged(int position, boolean isEnabled);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PolicySettingsItem item = settingsList.get(position);
+        PolicySettingsItem item = policySettingsList.get(position);
         holder.settingName.setText(item.getName());
         holder.settingDescription.setText(item.getDescription());
         holder.settingSwitch.setChecked(item.isEnabled());
-        holder.settingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> item.setEnabled(isChecked));
+        holder.settingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            item.setEnabled(isChecked);
+            onToggleChangeListener.onToggleChanged(position, isChecked);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return settingsList.size();
+        return policySettingsList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
