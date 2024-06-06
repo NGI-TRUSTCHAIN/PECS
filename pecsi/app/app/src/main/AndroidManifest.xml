@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".services.PECSServiceSDK" android:exported="false">
+            <intent-filter>
+                <action android:name="com.pecs.pecsi.services.PECSServiceSDK" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

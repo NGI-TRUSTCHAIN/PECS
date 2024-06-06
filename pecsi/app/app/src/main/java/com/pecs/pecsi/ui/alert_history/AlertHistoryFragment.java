@@ -1,6 +1,7 @@
 package com.pecs.pecsi.ui.alert_history;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pecs.pecsi.R;
 import com.pecs.pecsi.models.AlertHistoryItem;
+import com.pecs.pecsi.ui.policy_settings.PolicySettingsFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlertHistoryFragment extends Fragment {
+    private static final String TAG = AlertHistoryFragment.class.getSimpleName();
 
     private RecyclerView recyclerView;
     private AlertHistoryAdapter adapter;
@@ -68,7 +71,7 @@ public class AlertHistoryFragment extends Fragment {
                 alertHistoryList.add(new AlertHistoryItem(alertType, timestamp, details));
             }
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error parsing alert history JSON", e);
         }
         return alertHistoryList;
     }
