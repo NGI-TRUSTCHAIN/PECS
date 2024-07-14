@@ -1,0 +1,59 @@
+{
+    "preferences": {
+        "global": {
+            "present": true,
+            "preferences": {
+                    "read-calendar": true,
+                    "write-calendar": false,
+                    "camera": false,
+                    "read-contacts": true,
+                    "write-contacts": false,
+                    "fine-location": false,
+                    "coarse-location": true,
+                    "record-audio": false,
+                    "read-phone-state": true,
+                    "call-phone": false,
+                    "read-call-log": true,
+                    "write-call-log": false,
+                    "process-outgoing-calls": false,
+                    "send-sms": false,
+                    "receive-sms": true,
+                    "read-external-storage": true,
+                    "write-external-storage": false,
+                    "access-network-state": true,
+                    "access-wifi-state": true,
+                    "change-network-state": false,
+                    "change-wifi-state": false,
+                    "bluetooth": true,
+                    "bluetooth-admin": false,
+                    "wake-lock": true,
+                    "accessibility-service": false,
+                    "voice-interaction": true
+                }
+        },
+        "engineData": {
+            "fuel-system": true,
+            "engine-load": true,    
+            "coolant-temp": true,
+            "fuel-pressure": true,
+            "maf-pressure": true,
+            "rpm": false,
+            "vehicle-speed": false,
+            "timing-advance": true,
+            "throttle-position": false,
+            "o2-sensors": true,
+            "run-time": false,
+            "distance-with-mil": false,
+            "fuel-rail-pressure": true,
+            "egr-commander": false,
+            "dtc-list": true,
+            "fuel-tank-level": false,
+            "total-distance": true,
+            "air-fuel-ratio": true,
+            "ambient-air-temp": true,
+            "oil-temp": true,
+            "exhaust-gas-temp": false,
+            "nox-sensor": true
+        }
+    }
+}
