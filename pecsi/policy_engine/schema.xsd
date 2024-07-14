@@ -1,0 +1,74 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="AttributeValue">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:anyURI" name="DataType" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AttributeDesignator">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="Category" use="optional"/>
+          <xs:attribute type="xs:string" name="AttributeId" use="optional"/>
+          <xs:attribute type="xs:anyURI" name="DataType" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Match">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="urn:AttributeValue" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+        <xs:element ref="urn:AttributeDesignator" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="MatchId" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllOf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="urn:Match" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AnyOf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="urn:AllOf" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="urn:AnyOf" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Description" type="xs:string"/>
+  <xs:element name="Rule">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="urn:Target" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="RuleId" use="optional"/>
+      <xs:attribute type="xs:string" name="Effect" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Policy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="urn:Description" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+        <xs:element ref="urn:Target" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+        <xs:element ref="urn:Rule" maxOccurs="unbounded" minOccurs="0" xmlns:urn="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"/>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="PolicyId"/>
+      <xs:attribute type="xs:string" name="RuleCombiningAlgId"/>
+      <xs:attribute type="xs:float" name="Version"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,20 @@
+{
+    "policies": [
+        {
+            "uuid": "19d42eab-ed8e-4117-aab3-3927a1d29949",
+            "file":"policy_19d42eab-ed8e-4117-aab3-3927a1d29949.xml",
+            "json": "policy_19d42eab-ed8e-4117-aab3-3927a1d29949.json",
+            "timestamp": 1720778282,
+            "enforced": true,
+            "from-preset": false
+        },
+        {
+            "uuid": "ea8c8060-8b85-4cda-be67-eb9516c78b6d",
+            "file": "policy_ea8c8060-8b85-4cda-be67-eb9516c78b6d.xml",
+            "json": "policy_ea8c8060-8b85-4cda-be67-eb9516c78b6d.json",
+            "timestamp": 1720778280,
+            "enforced": false,
+            "from-preset": true
+        } 
+    ]
+}
