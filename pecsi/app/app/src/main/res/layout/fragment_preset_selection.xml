@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_preset0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Preset" />
+
+        <RadioButton
+            android:id="@+id/radio_preset1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="zeroShare" />
+
+        <RadioButton
+            android:id="@+id/radio_preset2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="veryLow" />
+
+        <RadioButton
+            android:id="@+id/radio_preset3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="low" />
+
+        <RadioButton
+            android:id="@+id/radio_preset4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mid" />
+
+        <RadioButton
+            android:id="@+id/radio_preset5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="high" />
+
+        <RadioButton
+            android:id="@+id/radio_preset6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="max" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

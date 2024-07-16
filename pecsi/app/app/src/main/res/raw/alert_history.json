@@ -1,6 +1,6 @@
 [
   {
-    "alertType": "Haptic Feedback",
+    "alertType": "Video Feedback",
     "timestamp": "2024-05-21 9:00 AM",
     "details": "App X attempted to access your financial information without permission."
   },
@@ -25,7 +25,7 @@
     "details": "App Y attempted to access your photos and videos without permission."
   },
   {
-    "alertType": "Haptic Feedback",
+    "alertType": "Audio Feedback",
     "timestamp": "2024-05-11 5:45 PM",
     "details": "App X attempted to access your device or other IDs without permission."
   }

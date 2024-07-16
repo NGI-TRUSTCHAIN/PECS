@@ -1,87 +1,158 @@
 [
   {
-    "name": "Location",
-    "description": "Allows the app to track your location for enhanced navigation.",
+    "key": "read-calendar",
+    "name": "Read Calendar",
+    "description": "Allows the app to read events from your calendar.",
     "isEnabled": true
   },
   {
-    "name": "Personal Information",
-    "description": "Allows the app to access and use your personal information.",
-    "isEnabled": true
-  },
-  {
-    "name": "Financial Information",
-    "description": "Allows the app to access and use your financial information.",
+    "key": "write-calendar",
+    "name": "Write Calendar",
+    "description": "Allows the app to add or modify events in your calendar.",
     "isEnabled": false
   },
   {
-    "name": "Health and Fitness",
-    "description": "Allows the app to access and use your health and fitness data.",
-    "isEnabled": true
-  },
-  {
-    "name": "Messages",
-    "description": "Allows the app to access and use your messages.",
-    "isEnabled": true
-  },
-  {
-    "name": "Photos and Videos",
-    "description": "Allows the app to access and use your photos and videos.",
+    "key": "camera",
+    "name": "Camera",
+    "description": "Allows the app to access your camera.",
     "isEnabled": false
   },
   {
-    "name": "Files and Documents",
-    "description": "Allows the app to access and use your files and documents.",
+    "key": "read-contacts",
+    "name": "Read Contacts",
+    "description": "Allows the app to read your contacts.",
     "isEnabled": true
   },
   {
-    "name": "Calendar",
-    "description": "Allows the app to access and use your calendar.",
-    "isEnabled": true
-  },
-  {
-    "name": "Contacts",
-    "description": "Allows the app to access and use your contacts.",
-    "isEnabled": true
-  },
-  {
-    "name": "App Activity",
-    "description": "Allows the app to access and use information about your app activity.",
+    "key": "write-contacts",
+    "name": "Write Contacts",
+    "description": "Allows the app to add or modify your contacts.",
     "isEnabled": false
   },
   {
-    "name": "App Interactions",
-    "description": "Allows the app to access and use information about your interactions with other apps.",
-    "isEnabled": true
-  },
-  {
-    "name": "In-App Search History",
-    "description": "Allows the app to access and use your in-app search history.",
+    "key": "fine-location",
+    "name": "Fine Location",
+    "description": "Allows the app to access your precise location.",
     "isEnabled": false
   },
   {
-    "name": "Installed Apps",
-    "description": "Allows the app to access and use information about installed apps.",
+    "key": "coarse-location",
+    "name": "Coarse Location",
+    "description": "Allows the app to access your approximate location.",
     "isEnabled": true
   },
   {
-    "name": "Other User-Generated Content",
-    "description": "Allows the app to access and use other user-generated content.",
-    "isEnabled": true
-  },
-  {
-    "name": "Web Browsing",
-    "description": "Allows the app to access and use your web browsing history.",
+    "key": "record-audio",
+    "name": "Record Audio",
+    "description": "Allows the app to record audio.",
     "isEnabled": false
   },
   {
-    "name": "App Info and Performance",
-    "description": "Allows the app to access and use information about app performance.",
+    "key": "read-phone-state",
+    "name": "Read Phone State",
+    "description": "Allows the app to access your phone's state information.",
     "isEnabled": true
   },
   {
-    "name": "Device or Other IDs",
-    "description": "Allows the app to access and use your device or other IDs.",
+    "key": "call-phone",
+    "name": "Call Phone",
+    "description": "Allows the app to initiate phone calls without user intervention.",
+    "isEnabled": false
+  },
+  {
+    "key": "read-call-log",
+    "name": "Read Call Log",
+    "description": "Allows the app to read your call log.",
+    "isEnabled": true
+  },
+  {
+    "key": "write-call-log",
+    "name": "Write Call Log",
+    "description": "Allows the app to add or modify your call log.",
+    "isEnabled": false
+  },
+  {
+    "key": "process-outgoing-calls",
+    "name": "Process Outgoing Calls",
+    "description": "Allows the app to monitor and process outgoing calls.",
+    "isEnabled": false
+  },
+  {
+    "key": "send-sms",
+    "name": "Send SMS",
+    "description": "Allows the app to send SMS messages.",
+    "isEnabled": false
+  },
+  {
+    "key": "receive-sms",
+    "name": "Receive SMS",
+    "description": "Allows the app to receive SMS messages.",
+    "isEnabled": true
+  },
+  {
+    "key": "read-external-storage",
+    "name": "Read External Storage",
+    "description": "Allows the app to read from external storage.",
+    "isEnabled": true
+  },
+  {
+    "key": "write-external-storage",
+    "name": "Write External Storage",
+    "description": "Allows the app to write to external storage.",
+    "isEnabled": false
+  },
+  {
+    "key": "access-network-state",
+    "name": "Access Network State",
+    "description": "Allows the app to view the state of all networks.",
+    "isEnabled": true
+  },
+  {
+    "key": "access-wifi-state",
+    "name": "Access WiFi State",
+    "description": "Allows the app to view the state of WiFi connections.",
+    "isEnabled": false
+  },
+  {
+    "key": "change-network-state",
+    "name": "Change Network State",
+    "description": "Allows the app to change the state of network connections.",
+    "isEnabled": true
+  },
+  {
+    "key": "change-wifi-state",
+    "name": "Change WiFi State",
+    "description": "Allows the app to change the state of WiFi connections.",
+    "isEnabled": false
+  },
+  {
+    "key": "bluetooth",
+    "name": "Bluetooth",
+    "description": "Allows the app to connect to Bluetooth devices.",
+    "isEnabled": true
+  },
+  {
+    "key": "bluetooth-admin",
+    "name": "Bluetooth Admin",
+    "description": "Allows the app to configure local Bluetooth devices.",
+    "isEnabled": false
+  },
+  {
+    "key": "wake-lock",
+    "name": "Wake Lock",
+    "description": "Allows the app to prevent the phone from going to sleep.",
+    "isEnabled": true
+  },
+  {
+    "key": "accessibility-service",
+    "name": "Accessibility Service",
+    "description": "Allows the app to access accessibility features.",
+    "isEnabled": false
+  },
+  {
+    "key": "voice-interaction",
+    "name": "Voice Interaction",
+    "description": "Allows the app to interact with the user via voice commands.",
     "isEnabled": true
   }
 ]

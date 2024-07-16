@@ -3,22 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.policy_settings.PolicySettingsFragment">
+    tools:context=".ui.policy_settings.ApplicationListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_policy_settings"
+        android:id="@+id/recycler_view_application_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/button_save_settings"
-        android:padding="16dp"
-        tools:listitem="@layout/item_policy_settings" />
+        android:padding="16dp" />
 
     <Button
-        android:id="@+id/button_save_settings"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_proceed"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Proceed"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:text="Save Settings" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"/>
 </RelativeLayout>

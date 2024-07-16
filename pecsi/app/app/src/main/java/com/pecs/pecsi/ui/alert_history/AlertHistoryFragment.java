@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlertHistoryFragment extends Fragment {
-    private static final String TAG = AlertHistoryFragment.class.getSimpleName();
 
     private RecyclerView recyclerView;
     private AlertHistoryAdapter adapter;
@@ -71,7 +70,7 @@ public class AlertHistoryFragment extends Fragment {
                 alertHistoryList.add(new AlertHistoryItem(alertType, timestamp, details));
             }
         } catch (IOException | JSONException e) {
-            Log.e(TAG, "Error parsing alert history JSON", e);
+            Log.e(getTag(), "Error parsing alert history JSON", e);
         }
         return alertHistoryList;
     }
