@@ -2,6 +2,7 @@ package com.pecs.pecsi.ui.policy_settings;
 
 import android.content.pm.ApplicationInfo;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pecs.pecsi.R;
+import com.pecs.pecsi.services.PECSServiceSDK;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Set;
 
 public class ApplicationListAdapter extends RecyclerView.Adapter<ApplicationListAdapter.ApplicationViewHolder> {
 
-    private List<ApplicationInfo> applicationList;
+
+    private static final String TAG = PECSServiceSDK.class.getSimpleName();
+
+    private List<JSONObject> applicationList;
     private final Set<String> selectedApplications;
 
-    public ApplicationListAdapter(List<ApplicationInfo> applicationList, Set<String> selectedApplications) {
+    public ApplicationListAdapter(List<JSONObject> applicationList, Set<String> selectedApplications) {
         this.applicationList = applicationList;
         this.selectedApplications = selectedApplications;
     }
@@ -34,18 +42,27 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<ApplicationList
 
     @Override
     public void onBindViewHolder(@NonNull ApplicationViewHolder holder, int position) {
-        ApplicationInfo application = applicationList.get(position);
-        holder.applicationName.setText(application.name);
-        holder.applicationPackage.setText(application.packageName);
-        holder.checkBox.setOnCheckedChangeListener(null);
-        holder.checkBox.setChecked(selectedApplications.contains(application.packageName));
-        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                selectedApplications.add(application.packageName);
-            } else {
-                selectedApplications.remove(application.packageName);
-            }
-        });
+        try {
+            JSONObject app = applicationList.get(position);
+            String appName = app.getString("app_name");
+            String packageName = app.getString("package_name");
+
+            holder.applicationName.setText(appName);
+            holder.applicationPackage.setText(packageName);
+            holder.checkBox.setOnCheckedChangeListener(null);
+            holder.checkBox.setChecked(selectedApplications.contains(packageName));
+            holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    selectedApplications.add(packageName);
+                } else {
+                    selectedApplications.remove(packageName);
+                }
+            });
+
+        }
+        catch (JSONException e) {
+            Log.e(TAG, "JSON error", e);
+        }
     }
 
     @Override

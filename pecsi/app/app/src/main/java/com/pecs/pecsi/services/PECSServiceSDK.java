@@ -26,6 +26,7 @@ public class PECSServiceSDK extends Service {
 
     public static final int MSG_SEND_POLICY_SETTINGS = 1;
     public static final int MSG_SEND_POLICY_CHOICE = 2;
+    public static final int MSG_SEND_APP_PERMISSIONS = 3;
 
     private final Messenger messenger = new Messenger(new IncomingHandler(this));
 
@@ -49,6 +50,9 @@ public class PECSServiceSDK extends Service {
                     break;
                 case MSG_SEND_POLICY_CHOICE:
                     service.handleSendChoice(msg);
+                    break;
+                case MSG_SEND_APP_PERMISSIONS:
+                    service.handleSendAppPermissions(msg);
                     break;
                 default:
                     super.handleMessage(msg);
@@ -75,6 +79,14 @@ public class PECSServiceSDK extends Service {
 
         String choicePath = SETTINGS_FOLDER_PATH + "/choice.json";
         saveJSONStringToFile(jsonChoice, choicePath);
+    }
+
+    private void handleSendAppPermissions(Message msg) {
+        String jsonPermissions = msg.getData().getString("jsonPermissions");
+        Log.d(TAG, "Received permissions: " + jsonPermissions);
+
+        String choicePath = PERMISSIONS_FOLDER_PATH + "/permissions.json";
+        saveJSONStringToFile(jsonPermissions, choicePath);
     }
 
     private void saveJSONStringToFile(String jsonString, String filePath) {

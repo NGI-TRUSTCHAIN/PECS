@@ -19,6 +19,10 @@ import android.widget.Button;
 
 import com.pecs.pecsi.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -29,7 +33,7 @@ public class ApplicationListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ApplicationListAdapter adapter;
-    private List<ApplicationInfo> applicationList;
+    private List<JSONObject> applicationList;
     private Set<String> selectedApplications;
 
     @Override
@@ -52,31 +56,36 @@ public class ApplicationListFragment extends Fragment {
         return rootView;
     }
 
-    private List<ApplicationInfo> getThirdPartyInstalledApps() {
-        List<ApplicationInfo> applicationList = new ArrayList<>();
+    private List<JSONObject> getThirdPartyInstalledApps() {
+        List<JSONObject> applicationList = new ArrayList<>();
         PackageManager packageManager = getContext().getPackageManager();
         List<ApplicationInfo> installedApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
         String selfPackageName = getContext().getPackageName();
 
         // Filter only third-party apps
-        for (ApplicationInfo appInfo: installedApps) {
+        for (ApplicationInfo appInfo : installedApps) {
             if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0 && !appInfo.packageName.equals(selfPackageName)) {
-                applicationList.add(appInfo);
+                try {
+                    String[] permissions = packageManager.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions;
+                    JSONArray permissionsArray = new JSONArray();
+                    if (permissions != null) {
+                        for (String permission : permissions) {
+                            permissionsArray.put(permission);
+                        }
+                    }
+
+                    JSONObject appJson = new JSONObject();
+                    appJson.put("app_name", appInfo.loadLabel(packageManager).toString());
+                    appJson.put("package_name", appInfo.packageName);
+                    appJson.put("permission_list", permissionsArray);
+
+                    applicationList.add(appJson);
+                } catch (PackageManager.NameNotFoundException | JSONException e) {
+                    Log.e(getTag(), "Package not found or JSON error: " + appInfo.packageName, e);
+                }
             }
         }
         Log.d(getTag(), "Installed third-party app list: " + applicationList);
-
-        // TODO: Append permissions to appList data retrieved
-        // Get permissions for each third-party app
-         for (ApplicationInfo appInfo : applicationList) {
-             try {
-                 String[] permissions = packageManager.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions;
-                 Log.d(getTag(), "App: " + appInfo.packageName + " Permissions: " + Arrays.toString(permissions));
-             } catch (PackageManager.NameNotFoundException e) {
-                 Log.e(getTag(), "Package not found: " + appInfo.packageName, e);
-             }
-         }
-
         return applicationList;
     }
 
@@ -84,6 +93,11 @@ public class ApplicationListFragment extends Fragment {
         // Store selected applications in SharedPreferences
         SharedPreferences sharedPref = getActivity().getSharedPreferences("PolicySettingsPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+        JSONArray jsonApplicationList = new JSONArray();
+        for (JSONObject app : applicationList) {
+            jsonApplicationList.put(app);
+        }
+        editor.putString("installedApplications", jsonApplicationList.toString());
         editor.putStringSet("selectedApplications", selectedApplications);
         editor.putString("selectionType", "target");
         editor.putString("selectedPreset", "No Preset");
