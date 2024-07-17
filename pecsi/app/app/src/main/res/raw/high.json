@@ -1,0 +1,299 @@
+{
+  "preferences": {
+    "global": {
+      "present": true,
+      "preferences": [
+        {
+          "key": "read-calendar",
+          "name": "Read Calendar",
+          "description": "Allows the app to read events from your calendar.",
+          "isEnabled": true
+        },
+        {
+          "key": "write-calendar",
+          "name": "Write Calendar",
+          "description": "Allows the app to add or modify events in your calendar.",
+          "isEnabled": false
+        },
+        {
+          "key": "camera",
+          "name": "Camera",
+          "description": "Allows the app to access the device camera.",
+          "isEnabled": true
+        },
+        {
+          "key": "read-contacts",
+          "name": "Read Contacts",
+          "description": "Allows the app to read your contacts.",
+          "isEnabled": true
+        },
+        {
+          "key": "write-contacts",
+          "name": "Write Contacts",
+          "description": "Allows the app to add or modify your contacts.",
+          "isEnabled": false
+        },
+        {
+          "key": "fine-location",
+          "name": "Fine Location",
+          "description": "Allows the app to access precise location.",
+          "isEnabled": true
+        },
+        {
+          "key": "coarse-location",
+          "name": "Coarse Location",
+          "description": "Allows the app to access approximate location.",
+          "isEnabled": true
+        },
+        {
+          "key": "record-audio",
+          "name": "Record Audio",
+          "description": "Allows the app to record audio.",
+          "isEnabled": false
+        },
+        {
+          "key": "read-phone-state",
+          "name": "Read Phone State",
+          "description": "Allows the app to access information about the phone.",
+          "isEnabled": true
+        },
+        {
+          "key": "call-phone",
+          "name": "Call Phone",
+          "description": "Allows the app to initiate phone calls.",
+          "isEnabled": true
+        },
+        {
+          "key": "read-call-log",
+          "name": "Read Call Log",
+          "description": "Allows the app to read your call log.",
+          "isEnabled": true
+        },
+        {
+          "key": "write-call-log",
+          "name": "Write Call Log",
+          "description": "Allows the app to add or modify your call log.",
+          "isEnabled": false
+        },
+        {
+          "key": "process-outgoing-calls",
+          "name": "Process Outgoing Calls",
+          "description": "Allows the app to process outgoing calls.",
+          "isEnabled": true
+        },
+        {
+          "key": "send-sms",
+          "name": "Send SMS",
+          "description": "Allows the app to send SMS messages.",
+          "isEnabled": false
+        },
+        {
+          "key": "receive-sms",
+          "name": "Receive SMS",
+          "description": "Allows the app to receive SMS messages.",
+          "isEnabled": true
+        },
+        {
+          "key": "read-external-storage",
+          "name": "Read External Storage",
+          "description": "Allows the app to read from external storage.",
+          "isEnabled": true
+        },
+        {
+          "key": "write-external-storage",
+          "name": "Write External Storage",
+          "description": "Allows the app to write to external storage.",
+          "isEnabled": true
+        },
+        {
+          "key": "access-network-state",
+          "name": "Access Network State",
+          "description": "Allows the app to access information about networks.",
+          "isEnabled": true
+        },
+        {
+          "key": "access-wifi-state",
+          "name": "Access WiFi State",
+          "description": "Allows the app to access information about Wi-Fi networks.",
+          "isEnabled": true
+        },
+        {
+          "key": "change-network-state",
+          "name": "Change Network State",
+          "description": "Allows the app to change network connectivity state.",
+          "isEnabled": true
+        },
+        {
+          "key": "change-wifi-state",
+          "name": "Change WiFi State",
+          "description": "Allows the app to change Wi-Fi connectivity state.",
+          "isEnabled": true
+        },
+        {
+          "key": "bluetooth",
+          "name": "Bluetooth",
+          "description": "Allows the app to connect to paired Bluetooth devices.",
+          "isEnabled": true
+        },
+        {
+          "key": "bluetooth-admin",
+          "name": "Bluetooth Admin",
+          "description": "Allows the app to discover and pair Bluetooth devices.",
+          "isEnabled": false
+        },
+        {
+          "key": "wake-lock",
+          "name": "Wake Lock",
+          "description": "Allows the app to keep the processor from sleeping or the screen from dimming.",
+          "isEnabled": true
+        },
+        {
+          "key": "accessibility-service",
+          "name": "Accessibility Service",
+          "description": "Allows the app to use accessibility services.",
+          "isEnabled": true
+        },
+        {
+          "key": "voice-interaction",
+          "name": "Voice Interaction",
+          "description": "Allows the app to recognize voice commands.",
+          "isEnabled": true
+        }
+      ]
+    },
+    "engineData": [
+      {
+        "key": "fuel-system",
+        "name": "Fuel System",
+        "description": "Monitors the fuel system of the vehicle.",
+        "isEnabled": true
+      },
+      {
+        "key": "engine-load",
+        "name": "Engine Load",
+        "description": "Measures the current engine load.",
+        "isEnabled": true
+      },
+      {
+        "key": "coolant-temp",
+        "name": "Coolant Temperature",
+        "description": "Monitors the coolant temperature of the engine.",
+        "isEnabled": true
+      },
+      {
+        "key": "fuel-pressure",
+        "name": "Fuel Pressure",
+        "description": "Monitors the fuel pressure in the vehicle.",
+        "isEnabled": true
+      },
+      {
+        "key": "maf-pressure",
+        "name": "MAF Pressure",
+        "description": "Monitors the MAF (Mass Air Flow) pressure.",
+        "isEnabled": true
+      },
+      {
+        "key": "rpm",
+        "name": "RPM",
+        "description": "Monitors the engine revolutions per minute.",
+        "isEnabled": true
+      },
+      {
+        "key": "vehicle-speed",
+        "name": "Vehicle Speed",
+        "description": "Monitors the current vehicle speed.",
+        "isEnabled": false
+      },
+      {
+        "key": "timing-advance",
+        "name": "Timing Advance",
+        "description": "Monitors the timing advance of the engine.",
+        "isEnabled": true
+      },
+      {
+        "key": "throttle-position",
+        "name": "Throttle Position",
+        "description": "Monitors the current throttle position.",
+        "isEnabled": true
+      },
+      {
+        "key": "o2-sensors",
+        "name": "Oxygen Sensors",
+        "description": "Monitors the oxygen sensors in the vehicle.",
+        "isEnabled": true
+      },
+      {
+        "key": "run-time",
+        "name": "Run Time",
+        "description": "Monitors the total engine running time.",
+        "isEnabled": false
+      },
+      {
+        "key": "distance-with-mil",
+        "name": "Distance with MIL",
+        "description": "Monitors the distance traveled with MIL (Malfunction Indicator Lamp) on.",
+        "isEnabled": true
+      },
+      {
+        "key": "fuel-rail-pressure",
+        "name": "Fuel Rail Pressure",
+        "description": "Monitors the fuel rail pressure in the vehicle.",
+        "isEnabled": true
+      },
+      {
+        "key": "egr-commander",
+        "name": "EGR Commander",
+        "description": "Monitors the EGR (Exhaust Gas Recirculation) command status.",
+        "isEnabled": false
+      },
+      {
+        "key": "dtc-list",
+        "name": "DTC List",
+        "description": "Monitors the Diagnostic Trouble Code (DTC) list.",
+        "isEnabled": true
+      },
+      {
+        "key": "fuel-tank-level",
+        "name": "Fuel Tank Level",
+        "description": "Monitors the current fuel tank level.",
+        "isEnabled": true
+      },
+      {
+        "key": "total-distance",
+        "name": "Total Distance",
+        "description": "Monitors the total distance traveled.",
+        "isEnabled": true
+      },
+      {
+        "key": "air-fuel-ratio",
+        "name": "Air-Fuel Ratio",
+        "description": "Monitors the air-fuel ratio of the engine.",
+        "isEnabled": true
+      },
+      {
+        "key": "ambient-air-temp",
+        "name": "Ambient Air Temperature",
+        "description": "Monitors the ambient air temperature.",
+        "isEnabled": true
+      },
+      {
+        "key": "oil-temp",
+        "name": "Oil Temperature",
+        "description": "Monitors the oil temperature of the engine.",
+        "isEnabled": true
+      },
+      {
+        "key": "exhaust-gas-temp",
+        "name": "Exhaust Gas Temperature",
+        "description": "Monitors the exhaust gas temperature.",
+        "isEnabled": true
+      },
+      {
+        "key": "nox-sensor",
+        "name": "NOx Sensor",
+        "description": "Monitors the NOx (Nitrogen Oxide) sensor status.",
+        "isEnabled": true
+      }
+    ]
+  }
+}

@@ -43,6 +43,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -112,8 +113,9 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         // Handle all preferences that the user set in the previous screens
         handlePreferences();
 
-        // TODO: Load from preset if selectedPreset
-        policySettingsList = parsePolicySettingsFromJson();
+        // Get settings from correspondent JSON preset
+        policySettingsList = new ArrayList<>();
+        parsePolicySettingsFromJsonPreset();
 
         // Initialize the adapter
         adapter = new PolicySettingsAdapter(policySettingsList, this);
@@ -133,28 +135,60 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
                 " and selectedApplications: " + selectedApplications);
     }
 
-    private List<PolicySettingsItem> parsePolicySettingsFromJson() {
-        List<PolicySettingsItem> policySettingsList = new ArrayList<>();
+    private void parsePolicySettingsFromJsonPreset() {
+        int resId;
+        switch (selectedPreset) {
+            case "zeroShare":
+                resId = R.raw.zero_share;
+                break;
+            case "veryLow":
+                resId = R.raw.very_low;
+                break;
+            case "low":
+                resId = R.raw.low;
+                break;
+            case "mid":
+                resId = R.raw.mid;
+                break;
+            case "high":
+                resId = R.raw.high;
+                break;
+            case "max":
+                resId = R.raw.max;
+                break;
+            default:
+                resId = R.raw.mid;
+        }
         try {
-            InputStream inputStream = getResources().openRawResource(R.raw.policy_settings);
+            InputStream inputStream = getResources().openRawResource(resId);
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);
             inputStream.close();
             String json = new String(buffer, StandardCharsets.UTF_8);
-            JSONArray jsonArray = new JSONArray(json);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String key = jsonObject.getString("key");
-                String name = jsonObject.getString("name");
-                String description = jsonObject.getString("description");
-                Boolean isEnabled = jsonObject.getBoolean("isEnabled");
-                policySettingsList.add(new PolicySettingsItem(key, name, description, isEnabled));
-            }
+            JSONObject rootObject = new JSONObject(json);
+
+            // Parse global preferences
+            parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONObject("global").getJSONArray("preferences"));
+
+            // Parse engine data preferences
+            parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONArray("engineData"));
+
+
         } catch (IOException | JSONException e) {
             Log.e(getTag(), "Error parsing policy settings JSON", e);
         }
-        return policySettingsList;
+    }
+
+    private void parseJSONPreferences(JSONArray preferencesArray) throws JSONException {
+        for (int i = 0; i < preferencesArray.length(); i++) {
+            JSONObject jsonObject = preferencesArray.getJSONObject(i);
+            String key = jsonObject.getString("key");
+            String name = jsonObject.getString("name");
+            String description = jsonObject.getString("description");
+            Boolean isEnabled = jsonObject.getBoolean("isEnabled");
+            policySettingsList.add(new PolicySettingsItem(key, name, description, isEnabled));
+        }
     }
 
     @Override
