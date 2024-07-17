@@ -44,8 +44,8 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<ApplicationList
     public void onBindViewHolder(@NonNull ApplicationViewHolder holder, int position) {
         try {
             JSONObject app = applicationList.get(position);
-            String appName = app.getString("app_name");
-            String packageName = app.getString("package_name");
+            String appName = app.getString("app");
+            String packageName = app.getString("package");
 
             holder.applicationName.setText(appName);
             holder.applicationPackage.setText(packageName);
