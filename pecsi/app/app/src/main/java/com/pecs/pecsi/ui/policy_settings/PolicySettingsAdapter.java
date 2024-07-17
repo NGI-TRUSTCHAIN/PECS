@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pecs.pecsi.R;
 import com.pecs.pecsi.models.PolicySettingsItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PolicySettingsAdapter extends RecyclerView.Adapter<PolicySettingsAdapter.ViewHolder> {

@@ -20,6 +20,7 @@ import android.widget.Button;
 import com.pecs.pecsi.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,23 +60,22 @@ public class ApplicationListFragment extends Fragment {
 
         // Filter only third-party apps
         for (ApplicationInfo appInfo: installedApps) {
-            Log.d(getTag(), "Applications installed: " + appInfo.toString());
             if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0 && !appInfo.packageName.equals(selfPackageName)) {
                 applicationList.add(appInfo);
             }
         }
         Log.d(getTag(), "Installed third-party app list: " + applicationList);
 
-
-        // TODO: Get permissions for each app
-        // for (ApplicationInfo appInfo : applicationList) {
-        //     try {
-        //         String[] permissions = packageManager.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions;
-        //         Log.d(TAG, "App: " + appInfo.packageName + " Permissions: " + Arrays.toString(permissions));
-        //     } catch (PackageManager.NameNotFoundException e) {
-        //         Log.e(TAG, "Package not found: " + appInfo.packageName, e);
-        //     }
-        // }
+        // TODO: Append permissions to appList data retrieved
+        // Get permissions for each third-party app
+         for (ApplicationInfo appInfo : applicationList) {
+             try {
+                 String[] permissions = packageManager.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions;
+                 Log.d(getTag(), "App: " + appInfo.packageName + " Permissions: " + Arrays.toString(permissions));
+             } catch (PackageManager.NameNotFoundException e) {
+                 Log.e(getTag(), "Package not found: " + appInfo.packageName, e);
+             }
+         }
 
         return applicationList;
     }

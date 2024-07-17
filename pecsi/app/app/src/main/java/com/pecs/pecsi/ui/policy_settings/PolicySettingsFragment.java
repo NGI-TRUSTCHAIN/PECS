@@ -64,6 +64,8 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
     private RecyclerView recyclerView;
     private PolicySettingsAdapter adapter;
     private List<PolicySettingsItem> policySettingsList;
+    private List<PolicySettingsItem> policyEngineDataSettingsList;
+    private List<PolicySettingsItem> combinedPolicySettingsList;
 
     private String selectedPreset;
     private String selectionType;
@@ -115,10 +117,14 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
 
         // Get settings from correspondent JSON preset
         policySettingsList = new ArrayList<>();
+        policyEngineDataSettingsList = new ArrayList<>();
         parsePolicySettingsFromJsonPreset();
 
+        // Combine policySettingsList and policyEngineDataSettingsList for displaying them
+        combinedPolicySettingsList = new ArrayList<>(policySettingsList);
+        combinedPolicySettingsList.addAll(policyEngineDataSettingsList);
         // Initialize the adapter
-        adapter = new PolicySettingsAdapter(policySettingsList, this);
+        adapter = new PolicySettingsAdapter(combinedPolicySettingsList, this);
         recyclerView.setAdapter(adapter);
 
         return rootView;
@@ -168,11 +174,10 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
             String json = new String(buffer, StandardCharsets.UTF_8);
             JSONObject rootObject = new JSONObject(json);
 
-            // Parse global preferences
-            parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONObject("global").getJSONArray("preferences"));
-
+            // Parse (global) preferences
+            parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONObject("global").getJSONArray("preferences"), "preferences");
             // Parse engine data preferences
-            parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONArray("engineData"));
+            parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONArray("engineData"), "engineData");
 
 
         } catch (IOException | JSONException e) {
@@ -180,21 +185,26 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         }
     }
 
-    private void parseJSONPreferences(JSONArray preferencesArray) throws JSONException {
+    private void parseJSONPreferences(JSONArray preferencesArray, String preferencesType) throws JSONException {
         for (int i = 0; i < preferencesArray.length(); i++) {
             JSONObject jsonObject = preferencesArray.getJSONObject(i);
             String key = jsonObject.getString("key");
             String name = jsonObject.getString("name");
             String description = jsonObject.getString("description");
             Boolean isEnabled = jsonObject.getBoolean("isEnabled");
-            policySettingsList.add(new PolicySettingsItem(key, name, description, isEnabled));
+            PolicySettingsItem item = new PolicySettingsItem(key, name, description, isEnabled);
+            if (preferencesType.equals("preferences")) {
+                policySettingsList.add(item);
+            } else {
+                policyEngineDataSettingsList.add(item);
+            }
         }
     }
 
     @Override
     public void onToggleChanged(int position, boolean isEnabled) {
         Log.d(getTag(), "Toggle state changed: " + isEnabled);
-        PolicySettingsItem item = policySettingsList.get(position);
+        PolicySettingsItem item = combinedPolicySettingsList.get(position);
         item.setEnabled(isEnabled);
         // User action overrides the preset
         selectedPreset = "No Preset";
@@ -205,37 +215,43 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         Log.d(getTag(), "Sending policy settings to PECSServiceSDK");
 
         JSONObject preferences = new JSONObject();
-
-        // Global Preferences
         JSONObject globalPreferences = new JSONObject();
+        JSONArray engineDataPreferences = new JSONArray();
+        JSONArray appSpecificPreferences = new JSONArray();
 
-        JSONArray flags = new JSONArray();
+        JSONArray preferencesFlags = new JSONArray();
         try {
+            // Get preferences flags
             for (PolicySettingsItem item : policySettingsList) {
                 JSONObject obj = new JSONObject();
                 obj.put(item.getKey(), item.isEnabled());
-                flags.put(obj);
+                preferencesFlags.put(obj);
+            }
+            // Get engineData flags
+            for (PolicySettingsItem item : policyEngineDataSettingsList) {
+                JSONObject obj = new JSONObject();
+                obj.put(item.getKey(), item.isEnabled());
+                engineDataPreferences.put(obj);
             }
 
             if (selectionType.equals("global")) {
-
                 globalPreferences.put("present", true);
-                globalPreferences.put("preferences", flags);
-                preferences.put("global", globalPreferences);
-                preferences.put("appSpecific", new JSONArray());
+                globalPreferences.put("preferences", preferencesFlags);
             } else {
-
                 globalPreferences.put("present", false);
                 globalPreferences.put("preferences", new JSONArray());
-                preferences.put("global", globalPreferences);
 
-                // TODO: For each selectedApp, iterate and add appSpecific preferences
+                for (String app : selectedApplications) {
+                    JSONObject appObj = new JSONObject();
+                    appObj.put("name", app);    // Duplicate the array for each app
+                    appObj.put("preferences", new JSONArray(preferencesFlags.toString()));
+                    appSpecificPreferences.put(appObj);
+                }
             }
 
             preferences.put("global", globalPreferences);
-            // TODO: Add engineData, for now mocking it up with flags
-            preferences.put("engineData", flags);
-            preferences.put("appSpecific", new JSONArray());
+            preferences.put("engineData", engineDataPreferences);
+            preferences.put("appSpecific", appSpecificPreferences);
             Log.d(getTag(), "Policy settings: " + preferences.toString());
 
             // Call SDK method to send the settings

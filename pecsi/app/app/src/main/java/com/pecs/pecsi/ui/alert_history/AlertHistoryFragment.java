@@ -42,6 +42,7 @@ public class AlertHistoryFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_view_alert_history);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // TODO: Read from JSON responses
         // Initialize the alert list
         alertList = parseAlertHistoryFromJson();
 
