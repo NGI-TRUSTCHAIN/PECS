@@ -39,7 +39,7 @@ public class PresetSelectionFragment extends Fragment {
 
                 // Navigate to PolicySettingsFragment
                 NavHostFragment.findNavController(PresetSelectionFragment.this)
-                        .navigate(R.id.action_preset_selection_to_policy_settings);
+                        .navigate(R.id.action_nav_preset_selection_to_application_list);
             }
         });
 
