@@ -63,7 +63,6 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
     private String selectedPreset;
     private String selectionType;
     private Set<String> selectedApplications;
-    private JSONArray installedApplications;
 
     public PolicySettingsFragment() {
         // Required empty public constructor
@@ -131,14 +130,6 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         SharedPreferences sharedPref = getActivity().getSharedPreferences("PolicySettingsPrefs", Context.MODE_PRIVATE);
         selectionType = sharedPref.getString("selectionType", "global");
         selectedPreset = sharedPref.getString("selectedPreset", "No Preset");
-        String installedApplicationsString = sharedPref.getString("installedApplications", null);
-        if (installedApplicationsString != null) {
-            try {
-                installedApplications = new JSONArray(installedApplicationsString);
-            } catch (JSONException e) {
-                Log.e(getTag(), "Error parsing JSON", e);
-            }
-        }
         selectedApplications = sharedPref.getStringSet("selectedApplications", null);
         Log.d(getTag(), "Shared preferences retrieved: selectionType: " + selectionType +
                 " and selectedPreset: " + selectedPreset +
@@ -312,24 +303,6 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         }
     }
 
-//    private void sendInstalledAppPermissionList() {
-//        Log.d(getTag(), "Sending installed app permission list to PECSServiceSDK");
-//
-//        try {
-//            JSONObject permissions = new JSONObject();
-//            permissions.put("data", installedApplications);
-//
-//            // Call SDK method to send the preset
-//            Message msg = Message.obtain(null, PECSServiceSDK.MSG_SEND_APP_PERMISSIONS);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("jsonPermissions", permissions.toString());
-//            msg.setData(bundle);
-//            serviceMessenger.send(msg);
-//        } catch (JSONException | RemoteException e) {
-//            Log.e(getTag(), "Error creating JSON", e);
-//        }
-//    }
-
     private void onSaveSettings() {
         // Logic to handle saving settings
         requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -338,7 +311,6 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         } else {
             sendPolicyPreset();
         }
-//        sendInstalledAppPermissionList();
         Toast.makeText(getContext(), "Settings saved", Toast.LENGTH_SHORT).show();
     }
 

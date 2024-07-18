@@ -1,6 +1,5 @@
 package com.pecs.pecsi.ui.policy_settings;
 
-import static com.pecs.pecsi.models.PermissionData.permissionMapping;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,7 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +45,6 @@ public class ApplicationListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         applicationList = getThirdPartyInstalledApps();
-        // TODO: When the user goes back to ApplicationList, the apps get unchecked (graphically)
         selectedApplications = new HashSet<>();
         adapter = new ApplicationListAdapter(applicationList, selectedApplications);
         recyclerView.setAdapter(adapter);
@@ -66,31 +63,15 @@ public class ApplicationListFragment extends Fragment {
 
         // Filter only third-party apps
         for (ApplicationInfo appInfo : installedApps) {
-            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {// && !appInfo.packageName.equals(selfPackageName)) {
+            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0 && !appInfo.packageName.equals(selfPackageName)) {
                 try {
-//                    String[] permissions = packageManager.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions;
-//                    // Initialise permissions JSON object
-//                    JSONObject permissionsJson = new JSONObject();
-//                    for (String flag : permissionMapping.values()) {
-//                        permissionsJson.put(flag, false);
-//                    }
-//                    // Update permissions JSON object based on app's permissions
-//                    if (permissions != null) {
-//                        for (String permission : permissions) {
-//                            if (permissionMapping.containsKey(permission)) {
-//                                permissionsJson.put(permissionMapping.get(permission), true);
-//                            }
-//                        }
-//                    }
-
                     JSONObject appJson = new JSONObject();
                     appJson.put("app", appInfo.loadLabel(packageManager).toString());
                     appJson.put("package", appInfo.packageName);
-//                    appJson.put("permissions", permissionsJson);
 
                     applicationList.add(appJson);
-                } catch (JSONException e) { // PackageManager.NameNotFoundException | JSONException e) {
-                    Log.e(getTag(), "JSON error: " + appInfo.packageName, e); // Package not found or JSON error: " + appInfo.packageName, e);
+                } catch (JSONException e) {
+                    Log.e(getTag(), "JSON error: " + appInfo.packageName, e);
                 }
             }
         }
