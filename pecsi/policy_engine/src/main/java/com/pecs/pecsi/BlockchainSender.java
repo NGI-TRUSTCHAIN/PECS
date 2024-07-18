@@ -55,18 +55,9 @@ public final class BlockchainSender {
         String privacyPolicy = "";
         String stringHash = "";
 
-        try {
-            //Path path = Path.of("textfile.txt").toAbsolutePath();
-            //System.out.println("Trying to open file " + path);
-            
+        try {            
             privacyPolicy = FileUtils.readFileToString(policy);
             String privacyPolicyEncoded = Base64.getEncoder().encodeToString(privacyPolicy.getBytes()); 
-
-            /*MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(xmlToString.getBytes(StandardCharsets.UTF_8));
-            //String s = new String(hash, StandardCharsets.UTF_8);
-
-            String encodedHash = Base64.getEncoder().encodeToString(hash);*/
         
             System.out.println("Submitting transaction to blockchain");
 
