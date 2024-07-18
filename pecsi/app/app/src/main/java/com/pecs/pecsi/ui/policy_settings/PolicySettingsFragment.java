@@ -280,7 +280,19 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
 
         try {
             JSONObject choice = new JSONObject();
-            choice.put("preset", selectedPreset);
+            String preset;
+            switch (selectedPreset){
+                case "very_low":
+                    preset = "veryLow";
+                    break;
+                case "zero_share":
+                    preset = "zeroShare";
+                    break;
+                default:
+                    preset = selectedPreset;
+            }
+
+            choice.put("preset", preset);
 
             // Call SDK method to send the preset
             Message msg = Message.obtain(null, PECSServiceSDK.MSG_SEND_POLICY_CHOICE);

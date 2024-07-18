@@ -1,32 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">
 
     <TextView
-        android:id="@+id/alert_type"
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Alert Type"
-        android:textSize="16sp" />
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/alert_timestamp"
+        android:id="@+id/data"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Alert Type"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/alert_details"
+        android:id="@+id/timestamp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Alert Type"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

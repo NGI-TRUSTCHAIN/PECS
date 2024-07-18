@@ -1,10 +1,13 @@
 package com.pecs.pecsi.ui.alert_history;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -42,37 +47,65 @@ public class AlertHistoryFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_view_alert_history);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // TODO: Read from JSON responses
         // Initialize the alert list
         alertList = parseAlertHistoryFromJson();
 
         // Initialize the adapter
         adapter = new AlertHistoryAdapter(alertList);
-        recyclerView.setAdapter(adapter);
+
+        if (alertList.isEmpty()) {
+            TextView noAlertsTextView = new TextView(getContext());
+            noAlertsTextView.setText("All good, there have been no alerts so far!");
+            noAlertsTextView.setTextSize(16);
+            noAlertsTextView.setGravity(Gravity.CENTER);
+            ((ViewGroup) rootView).addView(noAlertsTextView);
+        } else {
+            recyclerView.setAdapter(adapter);
+        }
 
         return rootView;
     }
 
     private List<AlertHistoryItem> parseAlertHistoryFromJson() {
         List<AlertHistoryItem> alertHistoryList = new ArrayList<>();
+        String filePath = Environment.getExternalStorageDirectory().toString() + "/Download/responses.json";
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            Log.d(getTag(), "JSON file does not exist");
+            return alertHistoryList;
+        }
+
         try {
-            InputStream inputStream = getResources().openRawResource(R.raw.alert_history);
-            int size = inputStream.available();
+            InputStream is = new FileInputStream(file);
+            int size = is.available();
             byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            String json = new String(buffer, StandardCharsets.UTF_8);
-            JSONArray jsonArray = new JSONArray(json);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String alertType = jsonObject.getString("alertType");
-                String timestamp = jsonObject.getString("timestamp");
-                String details = jsonObject.getString("details");
-                alertHistoryList.add(new AlertHistoryItem(alertType, timestamp, details));
+            is.read(buffer);
+            is.close();
+
+            String jsonString = new String(buffer, StandardCharsets.UTF_8);
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray responsesArray = jsonObject.getJSONArray("responses");
+
+            for (int i = 0; i < responsesArray.length(); i++) {
+                JSONObject responseObject = responsesArray.getJSONObject(i);
+                String appName = responseObject.getString("name");
+                JSONArray alertsArray = responseObject.getJSONArray("alerts");
+
+                for (int j = 0; j < alertsArray.length(); j++) {
+                    JSONObject alertObject = alertsArray.getJSONObject(j);
+                    String data = alertObject.getString("data");
+                    long timestamp = alertObject.getLong("timestamp");            
+                    String date = alertObject.getString("date");
+
+                    AlertHistoryItem alertHistoryItem = new AlertHistoryItem(appName, data, timestamp, date);
+                    alertHistoryList.add(alertHistoryItem);
+                }
             }
         } catch (IOException | JSONException e) {
-            Log.e(getTag(), "Error parsing alert history JSON", e);
+            Log.e(getTag(), "Error reading or parsing the JSON file", e);
         }
+
         return alertHistoryList;
     }
 

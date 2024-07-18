@@ -1,25 +1,31 @@
 package com.pecs.pecsi.models;
 
 public class AlertHistoryItem {
-    private String alertType;
-    private String timestamp;
-    private String details;
+    private String appName;
+    private String data;
+    private long timestamp;
+    private String date;
 
-    public AlertHistoryItem(String alertType, String timestamp, String details) {
-        this.alertType = alertType;
+    public AlertHistoryItem(String appName, String data, long timestamp, String date) {
+        this.appName = appName;
+        this.data = data;
         this.timestamp = timestamp;
-        this.details = details;
+        this.date = date;
     }
 
-    public String getAlertType() {
-        return alertType;
+    public String getAppName() {
+        return appName;
     }
 
-    public String getTimestamp() {
+    public String getData() {
+        return data;
+    }
+
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public String getDetails() {
-        return details;
+    public String getDate() {
+        return date;
     }
 }
