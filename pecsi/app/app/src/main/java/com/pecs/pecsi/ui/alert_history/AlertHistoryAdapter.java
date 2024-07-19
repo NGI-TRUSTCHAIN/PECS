@@ -15,10 +15,10 @@ import java.util.List;
 
 public class AlertHistoryAdapter extends RecyclerView.Adapter<AlertHistoryAdapter.ViewHolder> {
 
-    private List<AlertHistoryItem> alertList;
+    private List<AlertHistoryItem> alertHistoryList;
 
-    public AlertHistoryAdapter(List<AlertHistoryItem> alertList) {
-        this.alertList = alertList;
+    public AlertHistoryAdapter(List<AlertHistoryItem> alertHistoryList) {
+        this.alertHistoryList = alertHistoryList;
     }
 
     @NonNull
@@ -30,25 +30,30 @@ public class AlertHistoryAdapter extends RecyclerView.Adapter<AlertHistoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AlertHistoryItem item = alertList.get(position);
-        holder.alertType.setText(item.getAlertType());
-        holder.timestamp.setText(item.getTimestamp());
-        holder.details.setText(item.getDetails());
+        AlertHistoryItem alertHistoryItem = alertHistoryList.get(position);
+        holder.appNameTextView.setText(alertHistoryItem.getAppName());
+        holder.dataTextView.setText(alertHistoryItem.getData());
+        holder.timestampTextView.setText(String.valueOf(alertHistoryItem.getTimestamp()));
+        holder.dateTextView.setText(alertHistoryItem.getDate());
     }
 
     @Override
     public int getItemCount() {
-        return alertList.size();
+        return alertHistoryList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView alertType, timestamp, details;
+        TextView appNameTextView;
+        TextView dataTextView;
+        TextView timestampTextView;
+        TextView dateTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            alertType = itemView.findViewById(R.id.alert_type);
-            timestamp = itemView.findViewById(R.id.alert_timestamp);
-            details = itemView.findViewById(R.id.alert_details);
+            appNameTextView = itemView.findViewById(R.id.app_name);
+            dataTextView = itemView.findViewById(R.id.data);
+            timestampTextView = itemView.findViewById(R.id.timestamp);
+            dateTextView = itemView.findViewById(R.id.date);
         }
     }
 }

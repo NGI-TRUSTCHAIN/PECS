@@ -13,14 +13,11 @@
 
     <fragment
         android:id="@+id/nav_policy_settings"
-        android:name="com.pecs.pecsi.ui.policy_settings.TargetSelectionFragment"
+        android:name="com.pecs.pecsi.ui.policy_settings.PresetSelectionFragment"
         android:label="@string/menu_policy_settings"
-        tools:layout="@layout/fragment_target_selection" >
+        tools:layout="@layout/fragment_preset_selection" >
         <action
-            android:id="@+id/action_nav_target_selection_to_preset_selection"
-            app:destination="@id/nav_preset_selection" />
-        <action
-            android:id="@+id/action_nav_target_selection_to_application_list"
+            android:id="@+id/action_nav_preset_selection_to_application_list"
             app:destination="@id/nav_application_list" />
     </fragment>
 
@@ -31,16 +28,6 @@
         tools:layout="@layout/fragment_application_list" >
         <action
             android:id="@+id/action_application_list_to_policy_settings"
-            app:destination="@id/nav_actual_policy_settings" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_preset_selection"
-        android:name="com.pecs.pecsi.ui.policy_settings.PresetSelectionFragment"
-        android:label="@string/menu_preset_selection"
-        tools:layout="@layout/fragment_preset_selection" >
-        <action
-            android:id="@+id/action_preset_selection_to_policy_settings"
             app:destination="@id/nav_actual_policy_settings" />
     </fragment>
 
