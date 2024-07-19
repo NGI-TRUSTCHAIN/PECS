@@ -66,6 +66,9 @@ public class Administration {
             File file = new File(this.LIST_PATH);
             mapper.writeValue(file, root);
         } catch (IOException e) {e.printStackTrace();}
+
+        try {BlockchainSender.sendPolicy(new File("./policies/policy_" + uuid + ".xml"));}
+        catch (Exception e) {e.printStackTrace();}
     }
 
     public void addPolicy(Preferences prefs, String path) {
@@ -80,7 +83,9 @@ public class Administration {
         String uuid = UUID.randomUUID().toString();
         String policy = policyBuilder.buildPolicy(prefs, uuid);
         if (validator.validate(this.XSD_PATH, policy)) {
-            try {savePolicy(policy, "policies/policy_" + uuid + ".xml");}
+            try {
+                savePolicy(policy, "policies/policy_" + uuid + ".xml");
+            }
             catch (IOException e) {e.printStackTrace();}
 
             try {saveJson(path, uuid);}
@@ -129,6 +134,9 @@ public class Administration {
             File file = new File(this.LIST_PATH);
             mapper.writeValue(file, root);
         } catch (IOException e) {e.printStackTrace();}
+
+        try {BlockchainSender.sendPolicy(new File("./policies/policy_" + uuid + ".xml"));}
+        catch (Exception e) {e.printStackTrace();}
     }
 
     public Preferences getEnforcedPolicy() {
@@ -166,10 +174,6 @@ public class Administration {
 
         try {Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);}
         catch (Exception e) {e.printStackTrace();}
-    }
-
-    public void getPreset() {
-        
     }
 
     private final String LIST_PATH = "policiesTest.json";
