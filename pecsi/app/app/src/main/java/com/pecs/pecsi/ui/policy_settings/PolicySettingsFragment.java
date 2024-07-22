@@ -220,36 +220,32 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
 
         JSONObject preferences = new JSONObject();
         JSONObject globalPreferences = new JSONObject();
-        JSONArray engineDataPreferences = new JSONArray();
+        JSONObject engineDataPreferences = new JSONObject();
         JSONArray appSpecificPreferences = new JSONArray();
 
-        JSONArray globalPreferencesFlags = new JSONArray();
-        JSONArray appSpecificPreferencesFlags = new JSONArray();
+        JSONObject globalPreferencesFlags = new JSONObject();
+        JSONObject appSpecificPreferencesFlags = new JSONObject();
+
         try {
             // Get (global) preferences flags
             for (PolicySettingsItem item : policySettingsListGlobal) {
-                JSONObject obj = new JSONObject();
-                obj.put(item.getKey(), item.isEnabled());
-                globalPreferencesFlags.put(obj);
+                globalPreferencesFlags.put(item.getKey(), item.isEnabled());
             }
             // Get engineData flags
             for (PolicySettingsItem item : policySettingsListEngineData) {
-                JSONObject obj = new JSONObject();
-                obj.put(item.getKey(), item.isEnabled());
-                engineDataPreferences.put(obj);
+                engineDataPreferences.put(item.getKey(), item.isEnabled());
             }
+            // TODO: For now all selected apps have the same custom preferences
             // Get (appSpecific) preferences flags
             for (PolicySettingsItem item : policySettingsListAppSpecific) {
-                JSONObject obj = new JSONObject();
-                obj.put(item.getKey(), item.isEnabled());
-                appSpecificPreferencesFlags.put(obj);
+                appSpecificPreferencesFlags.put(item.getKey(), item.isEnabled());
             }
 
             if (selectionType.equals("target")) {
                 for (String app : selectedApplications) {
                     JSONObject appObj = new JSONObject();
                     appObj.put("name", app);    // Duplicate the array for each app
-                    appObj.put("preferences", new JSONArray(appSpecificPreferencesFlags.toString()));
+                    appObj.put("preferences", appSpecificPreferencesFlags);
                     appSpecificPreferences.put(appObj);
                 }
             }
@@ -257,9 +253,12 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
             globalPreferences.put("preferences", globalPreferencesFlags);
             globalPreferences.put("present", true);
 
-            preferences.put("global", globalPreferences);
-            preferences.put("engineData", engineDataPreferences);
-            preferences.put("appSpecific", appSpecificPreferences);
+            JSONObject preferencesObj = new JSONObject();
+            preferencesObj.put("global", globalPreferences);
+            preferencesObj.put("engineData", engineDataPreferences);
+            preferencesObj.put("appSpecific", appSpecificPreferences);
+
+            preferences.put("preferences", preferencesObj);
             Log.d(getTag(), "Policy settings: " + preferences.toString());
 
             // Call SDK method to send the settings
