@@ -18,8 +18,8 @@
     <string name="target_selection_target">Target</string>
 
     <string-array name="alert_types">
-        <item>Video</item>
-        <item>Audio</item>
+        <item>Text Logs</item>
+        <item>Notifications</item>
         <item>Haptic</item>
     </string-array>
 </resources>

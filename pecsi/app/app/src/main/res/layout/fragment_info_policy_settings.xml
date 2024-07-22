@@ -30,7 +30,7 @@
             android:id="@+id/tv_steps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Steps to Configure Your Privacy Settings:\n\n1. Configure Alerts:\n   Choose your preferred alert type for notifications when an application violates your privacy settings. Available alert types include:\n     - Video\n     - Audio\n     - Haptic\n\n  Selecting a higher-level alert will include lower-level alerts (e.g., choosing haptic feedback will also activate audio and video alerts).\n\n2. Choose a Preset:\n   Select a preset that aligns with your privacy and user experience preferences. Presets apply globally and to engine data.\n\n3. (Optionally) Select Target Applications:\n   After selecting a preset, you can select target applications to which apply custom policies, different from the global settings.\n\n4. Customise Policy Settings:\n   Review and adjust flags for:\n     - Global Settings\n     - Engine Data Settings\n     - App-Specific Settings (for the target applications you selected)."
+            android:text="Steps to Configure Your Privacy Settings:\n\n1. Configure Alerts:\n   Choose your preferred alert type for notifications when an application violates your privacy settings. Available alert types include:\n     - Text Logs (video feedback)\n     - Notifications (audio feedback)\n     - Haptic (haptic feedback)\n\n  Selecting a higher-level alert will include lower-level alerts (e.g., choosing Haptic feedback will also activate Notifications and Text Logs alerts).\n\n2. Choose a Preset:\n   Select a preset that aligns with your privacy and user experience preferences. Presets apply globally and to engine data.\n If you select a preset, the alert type will be always set to Audio.\n\n3. (Optionally) Select Target Applications:\n   After selecting a preset, you can select target applications to which apply custom policies, different from the global settings.\n\n4. Customise Policy Settings:\n   Review and adjust flags for:\n     - Global Settings\n     - Engine Data Settings\n     - App-Specific Settings (for the target applications you selected)."
             android:layout_marginBottom="16dp"/>
 
         <!-- Alert Type Spinner -->
@@ -54,7 +54,7 @@
             android:id="@+id/info_btn_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
+            android:text="Proceed to Preset Selection"
             android:layout_marginTop="16dp"/>
 
 

@@ -43,7 +43,7 @@ public class InfoPolicySettingsFragment extends Fragment {
             String selectedAlertType = spinnerAlertType.getSelectedItem().toString();
             int alertType;
             switch (selectedAlertType){
-                case "Video":
+                case "Text Logs":
                     alertType = 0;
                     break;
                 case "Haptic":
