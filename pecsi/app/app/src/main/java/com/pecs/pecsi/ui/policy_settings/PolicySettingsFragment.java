@@ -170,10 +170,13 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
             JSONObject rootObject = new JSONObject(json);
 
             // Parse (global) preferences
+            policySettingsListGlobal.add(new PolicySettingsItem("Global Settings"));
             parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONObject("global").getJSONArray("preferences"), "global");
             // Parse engine data preferences
+            policySettingsListEngineData.add(new PolicySettingsItem("EngineData Settings"));
             parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONArray("engineData"), "engineData");
             // Parse (appSpecific) preferences which are initialised as the global flags
+            policySettingsListAppSpecific.add(new PolicySettingsItem("AppSpecific Settings " + selectedApplications.toString() + ""));
             parseJSONPreferences(rootObject.getJSONObject("preferences").getJSONObject("global").getJSONArray("preferences"), "appSpecific");
 
 
@@ -229,16 +232,22 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         try {
             // Get (global) preferences flags
             for (PolicySettingsItem item : policySettingsListGlobal) {
-                globalPreferencesFlags.put(item.getKey(), item.isEnabled());
+                if (!item.isHeader()) {
+                    globalPreferencesFlags.put(item.getKey(), item.isEnabled());
+                }
             }
             // Get engineData flags
             for (PolicySettingsItem item : policySettingsListEngineData) {
-                engineDataPreferences.put(item.getKey(), item.isEnabled());
+                if (!item.isHeader()) {
+                    engineDataPreferences.put(item.getKey(), item.isEnabled());
+                }
             }
             // TODO: For now all selected apps have the same custom preferences
             // Get (appSpecific) preferences flags
             for (PolicySettingsItem item : policySettingsListAppSpecific) {
-                appSpecificPreferencesFlags.put(item.getKey(), item.isEnabled());
+                if (!item.isHeader()) {
+                    appSpecificPreferencesFlags.put(item.getKey(), item.isEnabled());
+                }
             }
 
             if (selectionType.equals("target")) {
@@ -305,7 +314,7 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
     private void onSaveSettings() {
         // Logic to handle saving settings
         requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if ("target".equals(selectionType)) {
+        if ("target".equals(selectionType) || "No Preset".equals(selectedPreset)) {
             sendPolicySettings();
         } else {
             sendPolicyPreset();

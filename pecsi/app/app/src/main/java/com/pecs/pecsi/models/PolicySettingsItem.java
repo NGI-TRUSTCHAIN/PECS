@@ -1,8 +1,10 @@
 package com.pecs.pecsi.models;
 
+import com.pecs.pecsi.ui.policy_settings.PolicySettingsAdapter;
+
 public class PolicySettingsItem {
     private String key, name, description, category;
-    private boolean isEnabled;
+    private boolean isEnabled, isHeader;
 
     public PolicySettingsItem(String key, String name, String description, boolean isEnabled, String category) {
         this.key = key;
@@ -10,6 +12,12 @@ public class PolicySettingsItem {
         this.description = description;
         this.isEnabled = isEnabled;
         this.category = category;
+        this.isHeader = false;
+    }
+
+    public PolicySettingsItem(String name) {
+        this.name = name;
+        this.isHeader = true;
     }
 
     public String getKey() {
@@ -31,6 +39,8 @@ public class PolicySettingsItem {
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
     }
+
+    public boolean isHeader() { return isHeader; }
 
     public String getCategory() {
         return category;

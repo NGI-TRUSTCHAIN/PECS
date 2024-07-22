@@ -28,8 +28,13 @@ public class PolicySettingsAdapter extends RecyclerView.Adapter<PolicySettingsAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_policy_settings, parent, false);
-        return new ViewHolder(view);
+        if (viewType == 0) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_policy_settings_header, parent, false);
+            return new ViewHolder(view, true);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_policy_settings, parent, false);
+            return new ViewHolder(view, false);
+        }
     }
 
     public interface OnToggleChangeListener {
@@ -39,13 +44,17 @@ public class PolicySettingsAdapter extends RecyclerView.Adapter<PolicySettingsAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PolicySettingsItem item = policySettingsList.get(position);
-        holder.settingName.setText(item.getName());
-        holder.settingDescription.setText(item.getDescription());
-        holder.settingSwitch.setChecked(item.isEnabled());
-        holder.settingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            item.setEnabled(isChecked);
-            onToggleChangeListener.onToggleChanged(position, isChecked);
-        });
+        if (item.isHeader()) {
+            holder.headerText.setText(item.getName());
+        } else {
+            holder.settingName.setText(item.getName());
+            holder.settingDescription.setText(item.getDescription());
+            holder.settingSwitch.setChecked(item.isEnabled());
+            holder.settingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                item.setEnabled(isChecked);
+                onToggleChangeListener.onToggleChanged(position, isChecked);
+            });
+        }
     }
 
     @Override
@@ -53,15 +62,28 @@ public class PolicySettingsAdapter extends RecyclerView.Adapter<PolicySettingsAd
         return policySettingsList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (policySettingsList.get(position).isHeader()) {
+            return 0; // Header view type
+        } else {
+            return 1; // Normal item view type
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView settingName, settingDescription;
+        TextView settingName, settingDescription, headerText;
         Switch settingSwitch;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, boolean isHeader) {
             super(itemView);
-            settingName = itemView.findViewById(R.id.setting_name);
-            settingDescription = itemView.findViewById(R.id.setting_description);
-            settingSwitch = itemView.findViewById(R.id.setting_switch);
+            if (isHeader) {
+                headerText = itemView.findViewById(R.id.header_text);
+            } else {
+                settingName = itemView.findViewById(R.id.setting_name);
+                settingDescription = itemView.findViewById(R.id.setting_description);
+                settingSwitch = itemView.findViewById(R.id.setting_switch);
+            }
         }
     }
 }
