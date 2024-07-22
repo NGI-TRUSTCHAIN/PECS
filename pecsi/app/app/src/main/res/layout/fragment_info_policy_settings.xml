@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to the PECS Policy Settings Configuration Wizard!"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Instructions -->
+        <TextView
+            android:id="@+id/tv_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PECS allows you to configure privacy policies through a set of presets or by creating fully custom policies. The available presets range from the most restrictive (maximising privacy with reduced user experience) to the most permissive (enhancing user experience at the expense of privacy)."
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps to Configure Your Privacy Settings:\n\n1. Configure Alerts:\n   Choose your preferred alert type for notifications when an application violates your privacy settings. Available alert types include:\n     - Video\n     - Audio\n     - Haptic\n\n  Selecting a higher-level alert will include lower-level alerts (e.g., choosing haptic feedback will also activate audio and video alerts).\n\n2. Choose a Preset:\n   Select a preset that aligns with your privacy and user experience preferences. Presets apply globally and to engine data.\n\n3. (Optionally) Select Target Applications:\n   After selecting a preset, you can select target applications to which apply custom policies, different from the global settings.\n\n4. Customise Policy Settings:\n   Review and adjust flags for:\n     - Global Settings\n     - Engine Data Settings\n     - App-Specific Settings (for the target applications you selected)."
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Alert Type Spinner -->
+        <TextView
+            android:id="@+id/tv_alert_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Your Preferred Alert Type:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_alert_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/info_btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:layout_marginTop="16dp"/>
+
+
+    </LinearLayout>
+
+</ScrollView>

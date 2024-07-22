@@ -22,7 +22,6 @@ import java.util.Set;
 
 public class ApplicationListAdapter extends RecyclerView.Adapter<ApplicationListAdapter.ApplicationViewHolder> {
 
-
     private static final String TAG = PECSServiceSDK.class.getSimpleName();
 
     private List<JSONObject> applicationList;

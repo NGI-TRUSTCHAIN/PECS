@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.policy_settings.ApplicationListFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Third-party applications found: \n(If no apps, just proceed with Global and EngineData flags.)"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_application_list"
         android:layout_width="match_parent"

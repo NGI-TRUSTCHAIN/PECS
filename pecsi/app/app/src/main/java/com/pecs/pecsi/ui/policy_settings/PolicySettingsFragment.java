@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,6 +61,7 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
     private List<PolicySettingsItem> policySettingsListAppSpecific;
     private List<PolicySettingsItem> combinedPolicySettingsList;
 
+    private int alertType;
     private String selectedPreset;
     private String selectionType;
     private Set<String> selectedApplications;
@@ -128,6 +130,7 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
     private void handlePreferences() {
         // Retrieve selection type, selected preset and selected applications from SharedPreferences
         SharedPreferences sharedPref = getActivity().getSharedPreferences("PolicySettingsPrefs", Context.MODE_PRIVATE);
+        alertType = sharedPref.getInt("alertType", 1);
         selectionType = sharedPref.getString("selectionType", "global");
         selectedPreset = sharedPref.getString("selectedPreset", "No Preset");
         selectedApplications = sharedPref.getStringSet("selectedApplications", null);
@@ -263,6 +266,7 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
             globalPreferences.put("present", true);
 
             JSONObject preferencesObj = new JSONObject();
+            preferencesObj.put("alertType", alertType);
             preferencesObj.put("global", globalPreferences);
             preferencesObj.put("engineData", engineDataPreferences);
             preferencesObj.put("appSpecific", appSpecificPreferences);
@@ -317,9 +321,20 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
         if ("target".equals(selectionType) || "No Preset".equals(selectedPreset)) {
             sendPolicySettings();
         } else {
+            // Reset alertType
+            alertType = 1;
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("PolicySettingsPrefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("alertType", 1);
+            editor.apply();
+
             sendPolicyPreset();
         }
         Toast.makeText(getContext(), "Settings saved", Toast.LENGTH_SHORT).show();
+
+        // Navigate to back to Home
+        NavHostFragment.findNavController(PolicySettingsFragment.this)
+                .navigate(R.id.action_nav_actual_policy_settings_to_home);
     }
 
     @Override
