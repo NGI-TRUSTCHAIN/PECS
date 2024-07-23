@@ -45,15 +45,6 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
     private Messenger serviceMessenger = null;
     private boolean isBound = false;
 
-    private ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    Log.d(getTag(), "Permission granted");
-                } else {
-                    Log.d(getTag(), "Permission not granted");
-                }
-            });
-
     private RecyclerView recyclerView;
     private PolicySettingsAdapter adapter;
     private List<PolicySettingsItem> policySettingsListGlobal;
@@ -272,12 +263,12 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
             preferencesObj.put("appSpecific", appSpecificPreferences);
 
             preferences.put("preferences", preferencesObj);
-            Log.d(getTag(), "Policy settings: " + preferences.toString());
+            Log.d(getTag(), "Policy settings: " + preferences.toString(4));
 
             // Call SDK method to send the settings
             Message msg = Message.obtain(null, PECSServiceSDK.MSG_SEND_POLICY_SETTINGS);
             Bundle bundle = new Bundle();
-            bundle.putString("jsonSettings", preferences.toString());
+            bundle.putString("jsonSettings", preferences.toString(4));
             msg.setData(bundle);
             serviceMessenger.send(msg);
         } catch (JSONException | RemoteException e) {
@@ -307,7 +298,7 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
             // Call SDK method to send the preset
             Message msg = Message.obtain(null, PECSServiceSDK.MSG_SEND_POLICY_CHOICE);
             Bundle bundle = new Bundle();
-            bundle.putString("jsonChoice", choice.toString());
+            bundle.putString("jsonChoice", choice.toString(4));
             msg.setData(bundle);
             serviceMessenger.send(msg);
         } catch (JSONException | RemoteException e) {
@@ -317,7 +308,6 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
 
     private void onSaveSettings() {
         // Logic to handle saving settings
-        requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if ("target".equals(selectionType) || "No Preset".equals(selectedPreset)) {
             sendPolicySettings();
         } else {
