@@ -51,7 +51,7 @@ public class AlertHistoryFragment extends Fragment {
         alertList = parseAlertHistoryFromJson();
 
         // Initialize the adapter
-        adapter = new AlertHistoryAdapter(alertList);
+        adapter = new AlertHistoryAdapter(getContext(), alertList);
 
         if (alertList.isEmpty()) {
             TextView noAlertsTextView = new TextView(getContext());
@@ -68,7 +68,7 @@ public class AlertHistoryFragment extends Fragment {
 
     private List<AlertHistoryItem> parseAlertHistoryFromJson() {
         List<AlertHistoryItem> alertHistoryList = new ArrayList<>();
-        String filePath = Environment.getExternalStorageDirectory().toString() + "/Download/responses.json";
+        String filePath = Environment.getExternalStorageDirectory().toString() + "/Download/response.json";
         File file = new File(filePath);
 
         if (!file.exists()) {

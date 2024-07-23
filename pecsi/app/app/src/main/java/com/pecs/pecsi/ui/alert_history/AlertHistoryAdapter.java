@@ -1,5 +1,11 @@
 package com.pecs.pecsi.ui.alert_history;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +22,10 @@ import java.util.List;
 public class AlertHistoryAdapter extends RecyclerView.Adapter<AlertHistoryAdapter.ViewHolder> {
 
     private List<AlertHistoryItem> alertHistoryList;
+    private Context context;
 
-    public AlertHistoryAdapter(List<AlertHistoryItem> alertHistoryList) {
+    public AlertHistoryAdapter(Context context, List<AlertHistoryItem> alertHistoryList) {
+        this.context = context;
         this.alertHistoryList = alertHistoryList;
     }
 
@@ -31,10 +39,33 @@ public class AlertHistoryAdapter extends RecyclerView.Adapter<AlertHistoryAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AlertHistoryItem alertHistoryItem = alertHistoryList.get(position);
-        holder.appNameTextView.setText(alertHistoryItem.getAppName());
+
+        // Parse app name from package
+        String packageName = alertHistoryItem.getAppName();
+        PackageManager packageManager = context.getPackageManager();
+        String appName = packageName;
+        try {
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+            appName = packageManager.getApplicationLabel(applicationInfo).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        holder.appNameTextView.setText(appName);
+
         holder.dataTextView.setText(alertHistoryItem.getData());
         holder.timestampTextView.setText(String.valueOf(alertHistoryItem.getTimestamp()));
         holder.dateTextView.setText(alertHistoryItem.getDate());
+
+        // Set click listener for the settings link
+        String finalAppName = appName;
+        holder.settingsLinkTextView.setOnClickListener(v -> {
+            Context context = holder.itemView.getContext();
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", finalAppName, null);
+            intent.setData(uri);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -47,6 +78,7 @@ public class AlertHistoryAdapter extends RecyclerView.Adapter<AlertHistoryAdapte
         TextView dataTextView;
         TextView timestampTextView;
         TextView dateTextView;
+        TextView settingsLinkTextView; // Add this line
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +86,7 @@ public class AlertHistoryAdapter extends RecyclerView.Adapter<AlertHistoryAdapte
             dataTextView = itemView.findViewById(R.id.data);
             timestampTextView = itemView.findViewById(R.id.timestamp);
             dateTextView = itemView.findViewById(R.id.date);
+            settingsLinkTextView = itemView.findViewById(R.id.settings_link);
         }
     }
 }
