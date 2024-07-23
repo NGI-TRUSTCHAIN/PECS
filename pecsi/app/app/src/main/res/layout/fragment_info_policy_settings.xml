@@ -23,7 +23,7 @@
             android:id="@+id/tv_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PECS allows you to configure privacy policies through a set of presets or by creating fully custom policies. The available presets range from the most restrictive (maximising privacy with reduced user experience) to the most permissive (enhancing user experience at the expense of privacy)."
+            android:text="PECS allows you to configure privacy policies through a set of presets or by creating fully custom policies. The available presets range from the most restrictive (maximising privacy with reduced user experience) to the most permissive (enhancing user experience at the expense of privacy).\n\nIn the event of a privacy violation, a notification will be triggered and you will be invited to see details in the Alert History screen. You are in control to take action following the provided link and change the permissions of the application that is violating your privacy policies."
             android:layout_marginBottom="16dp"/>
 
         <TextView
