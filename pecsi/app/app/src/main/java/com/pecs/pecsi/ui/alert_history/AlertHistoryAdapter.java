@@ -57,12 +57,11 @@ public class AlertHistoryAdapter extends RecyclerView.Adapter<AlertHistoryAdapte
         holder.dateTextView.setText(alertHistoryItem.getDate());
 
         // Set click listener for the settings link
-        String finalAppName = appName;
         holder.settingsLinkTextView.setOnClickListener(v -> {
             Context context = holder.itemView.getContext();
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", finalAppName, null);
+            Uri uri = Uri.fromParts("package", packageName, null);
             intent.setData(uri);
             context.startActivity(intent);
         });
