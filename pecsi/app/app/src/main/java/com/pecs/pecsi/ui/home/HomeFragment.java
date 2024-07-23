@@ -2,10 +2,13 @@ package com.pecs.pecsi.ui.home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,22 +27,37 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        messageTextView = rootView.findViewById(R.id.text_home);
+        TextView messageTextView = rootView.findViewById(R.id.text_home);
+        ImageView globalSettingsImageView = rootView.findViewById(R.id.global_settings_image);
+        ImageView engineDataSettingsImageView = rootView.findViewById(R.id.engine_data_settings_image);
 
         // Retrieve selectedPreset from SharedPreferences
         SharedPreferences sharedPref = getActivity().getSharedPreferences("PolicySettingsPrefs", Context.MODE_PRIVATE);
         String selectedPreset = sharedPref.getString("selectedPreset", "No Preset");
+        int alertType = sharedPref.getInt("alertType", 1);
 
         // Update the message based on selectedPreset value
         if (!"No Preset".equals(selectedPreset)) {
-            // TODO: Show radar chart to inform user.
-            messageTextView.setText("Policy settings enforced adopting preset " + selectedPreset);
+            // Load images from the specified paths
+            Bitmap globalSettingsBitmap = BitmapFactory.decodeFile("/Downloads/global.png");
+            Bitmap engineDataSettingsBitmap = BitmapFactory.decodeFile("/Downloads/engineData.png");
+
+            // Set the images to the ImageViews
+            globalSettingsImageView.setImageBitmap(globalSettingsBitmap);
+            engineDataSettingsImageView.setImageBitmap(engineDataSettingsBitmap);
+
+            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n" +
+                    "Preferred alert type " + alertType + "\n" +
+                    "Policy settings enforced adopting preset " + selectedPreset);
         } else {
-            messageTextView.setText("No preset selected");
+            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n" +
+                    "Preferred alert type " + alertType + "\n" +
+                    "No preset selected");
         }
 
         return rootView;
     }
+
 
     @Override
     public void onDestroyView() {
