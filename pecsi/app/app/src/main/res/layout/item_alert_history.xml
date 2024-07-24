@@ -29,7 +29,7 @@
         android:id="@+id/settings_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Take Action"
+        android:text="Go to app settings"
         android:textColor="@android:color/holo_blue_dark"
         android:clickable="true"
         android:textStyle="bold"

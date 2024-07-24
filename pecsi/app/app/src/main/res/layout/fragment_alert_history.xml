@@ -27,6 +27,12 @@
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/md_cyan_A700"
+        android:layout_marginBottom="8dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_alert_history"
         android:layout_width="match_parent"

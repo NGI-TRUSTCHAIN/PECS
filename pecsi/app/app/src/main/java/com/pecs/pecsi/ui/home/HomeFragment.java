@@ -42,13 +42,13 @@ public class HomeFragment extends Fragment {
             // Set the image to the ImageView
             settingsImageView.setImageBitmap(settingsBitmap);
 
-            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n\n" +
-                    "Preferred alert type: " + alertType + "\n" +
-                    "Policy settings enforced adopting preset: " + selectedPreset);
+            messageTextView.setText("Privacy Policy Summary\n\n" +
+                    "Alert Type: " + alertType + "\n" +
+                    "Preset Applied: " + selectedPreset);
         } else {
-            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n\n" +
-                    "Preferred alert type: " + alertType + "\n" +
-                    "No preset selected.");
+            messageTextView.setText("Privacy Policy Summary:\n\n" +
+                    "Alert Type: " + alertType + "\n" +
+                    "No preset applied.");
         }
 
         return rootView;

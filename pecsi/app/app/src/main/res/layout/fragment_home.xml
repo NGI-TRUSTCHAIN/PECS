@@ -18,6 +18,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/md_cyan_A700"
+            android:layout_marginBottom="8dp" />
+
         <LinearLayout
             android:id="@+id/image_container"
             android:layout_width="match_parent"
