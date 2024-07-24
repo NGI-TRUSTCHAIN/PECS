@@ -33,7 +33,9 @@ public class EntryPoint {
     public static void main(String[] args) {
         Administration pap = new Administration();
         Decision pdp = new Decision();
-        
+        PermissionsChecker checker = new PermissionsChecker();
+        Thread checkerThread = new Thread(checker);
+        checkerThread.start();
     
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -58,7 +60,7 @@ public class EntryPoint {
                             catch (IOException ex) {ex.printStackTrace();}
                             file.delete();
 
-                            System.out.println("\nReceived preset request: " + choice.getChoice());
+                            System.out.println("\n[INFO] Received Privacy Policy setting using preset: " + choice.getChoice().toUpperCase());
                             for (String preset : Presets.getList()) {
                                 if (choice.getChoice().equalsIgnoreCase(preset)) {
                                     String presetPath = "./presets/" + preset + ".json";
@@ -74,15 +76,15 @@ public class EntryPoint {
                             }
                         }
                         else if (fileName.equalsIgnoreCase("preferences.json")) {
-                            System.out.println("\nReceived custom policy request");
+                            System.out.println("\n[INFO] Received custom Privacy Policy settings");
                             Preferences prefs = null;
                             File file = new File(prefsPath + "preferences.json");
 
                             try {prefs = mapper.readValue(file, Preferences.class);}
                             catch (IOException exc) {exc.printStackTrace();}
-                            file.delete();
 
-                            pap.addPolicy(prefs, prefsPath);
+                            pap.addPolicy(prefs, prefsPath + "preferences.json");
+                            file.delete();
                         }
                     }
                 }
@@ -92,7 +94,7 @@ public class EntryPoint {
         } catch (Exception e) {e.printStackTrace();}
     }
 
-    private static String prefsPath = "../storage/downloads/";
+    private static String prefsPath = "../../storage/downloads/";
     private static WatchService watch = null;
     private static Path prefsDir = null;
 }
