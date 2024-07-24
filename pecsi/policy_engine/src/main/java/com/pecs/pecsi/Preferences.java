@@ -20,6 +20,9 @@ public class Preferences {
         @JsonProperty("appSpecific")
         private List<AppSpecific> appSpecifics;
 
+        @JsonProperty("alertType")
+        private int alertType;
+
         public static class Global {
             @JsonProperty("present")
             private boolean present;
@@ -47,7 +50,9 @@ public class Preferences {
         public Global getGlobals() {return this.globals;}
         public Map<String, Boolean> getEngineDataPrefs() {return this.engineData;}
         public List<AppSpecific> getAppSpecificPrefs() {return this.appSpecifics;}
+        public int getAlertType() {return this.alertType;}
     }
+
 
     public UserPreferences getPreferences() {return this.preferences;}
 }

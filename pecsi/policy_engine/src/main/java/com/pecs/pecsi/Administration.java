@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -146,7 +147,7 @@ public class Administration {
         PolicyList list = null;
 
         try {list = mapper.readValue(new File(this.LIST_PATH), PolicyList.class);}
-        catch (IOException e) {e.printStackTrace();}
+        catch (IOException e) {return null;}
 
         List<PolicyList.Policy> policies = list.getPolicies();
         String policyPath = null;
@@ -176,7 +177,7 @@ public class Administration {
         catch (Exception e) {e.printStackTrace();}
     }
 
-    private final String LIST_PATH = "policiesTest.json";
+    private final String LIST_PATH = "policiesList.json";
     private final String XSD_PATH = "schema.xsd";
     private String POLICY_PATH;
 }
