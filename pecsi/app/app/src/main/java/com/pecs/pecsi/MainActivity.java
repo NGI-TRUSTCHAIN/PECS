@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 checkFile();
-                handler.postDelayed(this, 10000); // Repeat every 10 seconds
+                handler.postDelayed(this, 60000); // Repeat every 60 seconds
             }
         };
         handler.post(runnable);

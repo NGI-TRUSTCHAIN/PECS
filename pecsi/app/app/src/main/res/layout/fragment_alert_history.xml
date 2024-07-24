@@ -9,7 +9,7 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You can resolve an alert by clicking on the 'Go to app settings' link.\nYou will be redirected to the settings of the application that is violating your privacy policies.\nPlease update the app permissions according to your preferences."
+        android:text="You can resolve an alert by clicking on the 'Go to app settings' link.\nYou will be redirected to the settings of the application that is violating your privacy policies.\nPlease update the app permissions according to your preferences.\n\n(Note that there might be some permissions that are automatically granted by your operating system and that are not revocable. This may depend on your operating system version.)"
         android:layout_margin="16dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
