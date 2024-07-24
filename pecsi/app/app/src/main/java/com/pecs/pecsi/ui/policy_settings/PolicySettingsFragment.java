@@ -302,7 +302,7 @@ public class PolicySettingsFragment extends Fragment implements PolicySettingsAd
             msg.setData(bundle);
             serviceMessenger.send(msg);
         } catch (JSONException | RemoteException e) {
-        Log.e(getTag(), "Error creating JSON", e);
+            Log.e(getTag(), "Error creating JSON", e);
         }
     }
 

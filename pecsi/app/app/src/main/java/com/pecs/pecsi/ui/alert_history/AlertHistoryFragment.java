@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -43,7 +44,7 @@ public class AlertHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_alert_history, container, false);
-
+        TextView noAlertsTextView = rootView.findViewById(R.id.no_alerts_text);
         recyclerView = rootView.findViewById(R.id.recycler_view_alert_history);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -54,13 +55,13 @@ public class AlertHistoryFragment extends Fragment {
         adapter = new AlertHistoryAdapter(getContext(), alertList);
 
         if (alertList.isEmpty()) {
-            TextView noAlertsTextView = new TextView(getContext());
             noAlertsTextView.setText("All good, there have been no alerts so far!");
-            noAlertsTextView.setTextSize(16);
-            noAlertsTextView.setGravity(Gravity.CENTER);
-            ((ViewGroup) rootView).addView(noAlertsTextView);
+            noAlertsTextView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         } else {
+            noAlertsTextView.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
+            recyclerView.setVisibility(View.VISIBLE);
         }
 
         return rootView;

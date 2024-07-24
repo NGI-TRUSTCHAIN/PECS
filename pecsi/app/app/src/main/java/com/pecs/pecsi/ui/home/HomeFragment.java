@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.pecs.pecsi.R;
 import com.pecs.pecsi.databinding.FragmentHomeBinding;
@@ -28,8 +28,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         TextView messageTextView = rootView.findViewById(R.id.text_home);
-        ImageView globalSettingsImageView = rootView.findViewById(R.id.global_settings_image);
-        ImageView engineDataSettingsImageView = rootView.findViewById(R.id.engine_data_settings_image);
+        ImageView settingsImageView = rootView.findViewById(R.id.settings_image);
 
         // Retrieve selectedPreset from SharedPreferences
         SharedPreferences sharedPref = getActivity().getSharedPreferences("PolicySettingsPrefs", Context.MODE_PRIVATE);
@@ -38,26 +37,22 @@ public class HomeFragment extends Fragment {
 
         // Update the message based on selectedPreset value
         if (!"No Preset".equals(selectedPreset)) {
-            // Load images from the specified paths
-            Bitmap globalSettingsBitmap = BitmapFactory.decodeFile("/Downloads/global.png");
-            Bitmap engineDataSettingsBitmap = BitmapFactory.decodeFile("/Downloads/engineData.png");
+            // Load image from the specified paths
+            Bitmap settingsBitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().toString() + "/Download/" + selectedPreset + ".png");
+            // Set the image to the ImageView
+            settingsImageView.setImageBitmap(settingsBitmap);
 
-            // Set the images to the ImageViews
-            globalSettingsImageView.setImageBitmap(globalSettingsBitmap);
-            engineDataSettingsImageView.setImageBitmap(engineDataSettingsBitmap);
-
-            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n" +
-                    "Preferred alert type " + alertType + "\n" +
-                    "Policy settings enforced adopting preset " + selectedPreset);
+            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n\n" +
+                    "Preferred alert type: " + alertType + "\n" +
+                    "Policy settings enforced adopting preset: " + selectedPreset);
         } else {
-            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n" +
-                    "Preferred alert type " + alertType + "\n" +
-                    "No preset selected");
+            messageTextView.setText("The current situation for your privacy policy settings is summarised in this page.\n\n" +
+                    "Preferred alert type: " + alertType + "\n" +
+                    "No preset selected.");
         }
 
         return rootView;
     }
-
 
     @Override
     public void onDestroyView() {

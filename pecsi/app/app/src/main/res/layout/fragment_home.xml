@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home Fragment"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/global_settings_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_home"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Global Settings Image" />
+        <TextView
+            android:id="@+id/text_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home Fragment"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"/>
 
-    <ImageView
-        android:id="@+id/engine_data_settings_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/global_settings_image"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Engine Data Settings Image" />
+        <LinearLayout
+            android:id="@+id/image_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_home"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/settings_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Policy Settings" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -5,10 +5,33 @@
     android:layout_height="match_parent"
     tools:context=".ui.alert_history.AlertHistoryFragment">
 
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You can resolve an alert by clicking on the 'Go to app settings' link.\nYou will be redirected to the settings of the application that is violating your privacy policies.\nPlease update the app permissions according to your preferences."
+        android:layout_margin="16dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/no_alerts_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_below="@id/description"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_alert_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/description"
         android:padding="16dp"
         tools:listitem="@layout/item_alert_history" />
 
