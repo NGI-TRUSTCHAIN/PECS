@@ -2,27 +2,24 @@ package com.pecs.pecsi;
 
 import java.io.*;
 import org.apache.commons.io.FileUtils;
-// import org.apache.commons.lang3.StringEscapeUtils;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 
-import java.io.IOException;
+import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.InvalidKeyException;
 import java.security.cert.CertificateException;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
+import java.security.cert.Certificate;
 
 import java.io.*;
+// import org.apache.commons.lang3.StringEscapeUtils;
 import java.security.*;
 
 @SuppressWarnings("unused")
 public final class BlockchainSender {
-    private static String signature;
+    private static String signatureString;
     private static PublicKey publicKey;
     private static PrivateKey privateKey;
 
@@ -59,9 +56,9 @@ public final class BlockchainSender {
             privacyPolicy = FileUtils.readFileToString(policy);
             String privacyPolicyEncoded = Base64.getEncoder().encodeToString(privacyPolicy.getBytes()); 
         
-            System.out.println("Submitting transaction to blockchain");
+            System.out.println("Preparing data for blockchain...");
 
-            securing_policy(policy.toString());
+            pecs_ds(policy.toString());
 
             String signature = get_signature();
             String pubKey = get_publicKey();
@@ -75,7 +72,7 @@ public final class BlockchainSender {
 
     
     public static String get_signature(){
-        return signature;
+        return signatureString;
     }
 
     public static String get_publicKey(){
@@ -84,6 +81,51 @@ public final class BlockchainSender {
 
         return str_key;
     }
+
+    public static void pecs_ds(String policyPath){
+		System.out.println("Digital signature on " + policyPath);
+		char[] pass = ("pecsToBlockchain").toCharArray();
+
+		try{
+			KeyStore keyStore = KeyStore.getInstance("JKS");
+			keyStore.load(new FileInputStream("../pecs-ds/sender_keystore.jks"), pass);
+			
+			privateKey = (PrivateKey) keyStore.getKey("senderKeyPair", pass);
+			
+			keyStore.load(new FileInputStream("../pecs-ds/receiver_keystore.jks"), pass);
+
+			Certificate certificate = keyStore.getCertificate("receiverKeyPair");
+			publicKey = certificate.getPublicKey();
+
+			Signature signature = Signature.getInstance("MD5withRSA");
+			signature.initSign(privateKey);
+
+			byte[] messageBytes = Files.readAllBytes(Paths.get(policyPath));
+			
+			signature.update(messageBytes);
+
+			byte[] digitalSignature = signature.sign();
+			String s = new String(digitalSignature, StandardCharsets.UTF_8);
+
+			signatureString = Base64.getEncoder().encodeToString(digitalSignature);
+			
+			System.out.println("digital signature " + signatureString);
+			System.out.println("public key " + get_publicKey());
+
+			//verification
+
+            /*
+			signature.initVerify(publicKey);
+			signature.update(messageBytes);
+			boolean isCorrect = signature.verify(digitalSignature);
+
+			System.out.println("Verification " + isCorrect);
+            */
+
+		}
+		catch (Exception e) {e.printStackTrace(System.out);}
+	}
+
 
     public static void securing_policy(String path){
         try {
@@ -103,7 +145,7 @@ public final class BlockchainSender {
 
             String s = new String(realSig, StandardCharsets.UTF_8);
             
-            signature = s;
+            signatureString = s;
 
             // verify signature...
 
