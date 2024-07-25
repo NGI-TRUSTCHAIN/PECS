@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f2f2f2"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="This application is PECS-Compliant, hence, you can choose if you want to send your driving data to our servers to use our service, or if you want to use Secure Multi Party Computation (SMPC) to protect your data. If you decide to use SMPC, your driving data will not be transmitted to our servers. Instead, driving data will be obfuscated (i.e., no one will be able to retrieve the exact driving data) and shared with other users of this application. In this way, we are still able to provide you this service, without anyone actually accessing your data. Only the average speed of all users is shared with us."
+            android:textAlignment="center"
+            android:textColor="#4a5663"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+        <!-- Server URL Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/serverUrlInputLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <EditText
+                android:id="@+id/serverUrlInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Server URL" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Study Name Input -->
+        <!--<com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/studyNameInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/serverUrlInputLayout">
+
+            <EditText
+                android:id="@+id/studyNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Study Name"/>
+
+        </com.google.android.material.textfield.TextInputLayout> -->
+
+        <!-- Participant Name Input -->
+        <!--<com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/participantNameInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/studyNameInputLayout">
+
+            <EditText
+                android:id="@+id/participantNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Participant Name" />
+
+        </com.google.android.material.textfield.TextInputLayout> -->
+
+        <!-- Email Receiving Input -->
+        <!-- <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailReceivingInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/participantNameInputLayout">
+
+            <EditText
+                android:id="@+id/emailReceivingInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Email" />
+
+        </com.google.android.material.textfield.TextInputLayout> -->
+
+        <!-- Password Receiving Input -->
+        <!-- <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordReceivingInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emailReceivingInputLayout">
+
+            <EditText
+                android:id="@+id/passwordReceivingInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Password"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout> -->
+
+        <!-- Key and Value Input -->
+        <!-- <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/keyValueInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordReceivingInputLayout">
+
+            <EditText
+                android:id="@+id/keyInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Key" />
+
+        </com.google.android.material.textfield.TextInputLayout> -->
+
+        <!-- <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/valueInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/keyValueInputLayout">
+
+            <EditText
+                android:id="@+id/valueInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Value"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout> -->
+
+        <!-- Add Button -->
+        <!-- <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/valueInputLayout" /> -->
+
+        <!-- ListView to Display HashMap Entries -->
+
+        <!-- <ListView
+            android:id="@+id/hashmapListView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            app:layout_constraintBottom_toTopOf="@id/buttonLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addButton" /> -->
+
+        <!-- Button Layout -->
+
+
+            <Button
+                android:id="@+id/participateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Calculate Average Speed" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:textAlignment="center"
+                android:text="Use SMPC" />
+            <!-- <Button
+                android:id="@+id/createSessionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Create Session"
+                android:visibility="gone" /> -->
+
+        <!-- Results Text (TextView) -->
+
+        <TextView
+            android:id="@+id/resultView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text=""
+             />
+
+        <!-- <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/valueInputLayout" /> -->
+
+
+
+    </LinearLayout>
+</ScrollView>
