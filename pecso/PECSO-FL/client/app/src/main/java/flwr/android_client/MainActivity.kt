@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getAndPrintEngineStatus(){
         var engineStatus = 0
-        val filePath = "/storage/emulated/0/Download"
+        val filePath = "/storage"
         try {
             Log.d("D", "Filepath is: "+ filePath)
             val file = File(filePath, "engineData.json")
