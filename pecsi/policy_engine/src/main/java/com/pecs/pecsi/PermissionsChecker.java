@@ -28,7 +28,7 @@ public class PermissionsChecker implements Runnable {
     @Override
     public void run() {
         HashMap<String, String> alertMap = new HashMap<String, String>();
-        setupCanInterface();
+        // setupCanInterface(); -> task done with startup script
 
         while (true) {
             try {Thread.sleep(5000);}

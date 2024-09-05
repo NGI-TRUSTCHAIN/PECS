@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.PlaceholderForType;
 import com.pecs.pecsi.Request.AppPermission;
 
-import net.sf.saxon.event.StreamWriterToReceiver;
-
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -25,8 +23,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
-
-import oasis.names.tc.xacml._3_0.core.schema.wd_17.*;
 
 @SuppressWarnings("unused")
 public class EntryPoint {
