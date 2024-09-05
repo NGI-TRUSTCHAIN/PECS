@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest$InvokeReadAssetTransaction" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-07-18T09:21:20" hostname="DESKTOP-R1N372L" time="0.013">
+  <properties/>
+  <testcase name="whenAssetExists()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest$InvokeReadAssetTransaction" time="0.005"/>
+  <testcase name="whenAssetDoesNotExist()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest$InvokeReadAssetTransaction" time="0.005"/>
+  <system-out><![CDATA[Asset privacyPolicy1 does not exist
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

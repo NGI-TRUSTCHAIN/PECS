@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/home/gian/go/src/github.com/gian/fabric-samples/PECS-D3/chaincode-java/src/main/java/org/hyperledger/fabric/samples/assettransfer/Asset.java">
+</file>
+<file name="/home/gian/go/src/github.com/gian/fabric-samples/PECS-D3/chaincode-java/src/main/java/org/hyperledger/fabric/samples/assettransfer/AssetTransfer.java">
+</file>
+</checkstyle>
