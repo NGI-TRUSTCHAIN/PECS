@@ -63,7 +63,7 @@ public class EntryPoint {
                             System.out.println("\n[INFO] Received Privacy Policy setting using preset: " + choice.getChoice().toUpperCase());
                             for (String preset : Presets.getList()) {
                                 if (choice.getChoice().equalsIgnoreCase(preset)) {
-                                    String presetPath = "./presets/" + preset + ".json";
+                                    String presetPath = "/data/data/com.termux/files/home/PECS/pecsi/presets/" + preset + ".json";
                                     Preferences prefs = null;
 
                                     try {prefs = mapper.readValue(new File(presetPath), Preferences.class);}
@@ -94,7 +94,7 @@ public class EntryPoint {
         } catch (Exception e) {e.printStackTrace();}
     }
 
-    private static String prefsPath = "../../storage/downloads/";
+    private static String prefsPath = "/data/data/com.termux/files/home/storage/downloads/";
     private static WatchService watch = null;
     private static Path prefsDir = null;
 }

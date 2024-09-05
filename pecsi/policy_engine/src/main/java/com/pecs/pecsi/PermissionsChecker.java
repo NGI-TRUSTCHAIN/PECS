@@ -10,6 +10,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Set;
+import java.util.HashSet;
+import org.json.*;
+import java.util.Map;
+import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -22,6 +27,9 @@ public class PermissionsChecker implements Runnable {
 
     @Override
     public void run() {
+        HashMap<String, String> alertMap = new HashMap<String, String>();
+        setupCanInterface();
+
         while (true) {
             try {Thread.sleep(5000);}
             catch (InterruptedException e) {e.printStackTrace();}
@@ -34,7 +42,7 @@ public class PermissionsChecker implements Runnable {
                 System.out.println("[INFO] No Privacy Policy enforced right now, skipping permission check round");
                 continue;
             }
-            String[] packagesComm = {"/bin/bash", "-c", "pm list packages -3"};
+            String[] packagesComm = {"/system/bin/sh", "-c", "pm list packages -3"};
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
             ObjectNode root = mapper.createObjectNode();
@@ -65,9 +73,11 @@ public class PermissionsChecker implements Runnable {
                 if (exitCode != 0) System.err.println("Error while command executing: " + exitCode);
             } catch (IOException e) {e.printStackTrace();}
     
+            HashMap<String, String> checkerMap = new HashMap<String, String>(alertMap);
+            alertMap.clear();
             for (String pack : packages) {
                 String comm = "echo \"dumpsys package " + pack + " | grep -E 'android.permission.[A-Z_]+:'\" | su";
-                String[] permsComm = {"/bin/bash", "-c", comm};
+                String[] permsComm = {"/system/bin/sh", "-c", comm};
                 List<String> packPerms = new ArrayList<>();
     
                 try {
@@ -127,6 +137,7 @@ public class PermissionsChecker implements Runnable {
                             // System.out.println("adding alert...");
                             checked.add(perm);
                             alerts.add(alert);
+                            alertMap.put(pack, perm);
                         }
                     }
                     
@@ -136,7 +147,12 @@ public class PermissionsChecker implements Runnable {
             }
     
             root.set("responses", responses);
-            sendResponseToFrontend(root);
+            // check if there are any changes
+            if (!checkerMap.equals(alertMap)) {
+                System.out.println("[INFO] New privacy violation detected");
+                sendResponseToFrontend(root);
+                hapticFeedback();
+            }
             saveResponse(root);
             System.out.println("[INFO] Apps permissions check round completed");
         }
@@ -146,27 +162,27 @@ public class PermissionsChecker implements Runnable {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            File file = new File("../../storage/downloads/response.json");
+            File file = new File("/data/data/com.termux/files/home/storage/downloads/response.json");
             mapper.writeValue(file, root);
         }
         catch (IOException e) {e.printStackTrace();}
     }
 
     private static void saveResponse(ObjectNode root) {
-        File responsesDir = new File("./responses/");
+        File responsesDir = new File("/data/data/com.termux/files/home/PECS/pecsi/responses/");
 
         if (!responsesDir.exists()) responsesDir.mkdir();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            File file = new File("./responses/response_" + UUID.randomUUID().toString() + ".json");
+            File file = new File("/data/data/com.termux/files/home/PECS/pecsi/responses/response_" + UUID.randomUUID().toString() + ".json");
             mapper.writeValue(file, root);
         }
         catch (IOException e) {e.printStackTrace();}
     }
 
-    public static String adjust(String s) {
+    private static String adjust(String s) {
         String[] parts = s.split("[_]");
         
         StringBuilder result = new StringBuilder();
@@ -181,12 +197,44 @@ public class PermissionsChecker implements Runnable {
         return result.toString();
     }
 
-    public static String clean(String s) {
+    private static String clean(String s) {
         int i = s.indexOf(':');
         if (i != -1) return s.substring(0, i);
         
         return s;
     }
+
+    private static void setupCanInterface() {
+        // eventually insert echo *
+        String[] comm = {"/system/bin/sh", "-c", "ip link set can0 type can bitrate 50000 | su && ip link set dev can0 txqueuelen 10000 | su && ip link set up can0 | su"};
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder(comm);
+            Process proc = processBuilder.start();
+
+            int exitCode = 0;
+            try {exitCode = proc.waitFor();}
+            catch (Exception e) {e.printStackTrace();}
+        } catch (IOException e) {e.printStackTrace();}
+
+        System.out.println("[INFO] CAN interface setup completed");
+    }
+
+    private static void hapticFeedback() {
+        String[] comm = {"/system/bin/sh", "-c", "cansend can0 0D5#5649425241"};
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder(comm);
+            Process proc = processBuilder.start();
+
+            int exitCode = 0;
+            try {exitCode = proc.waitFor();}
+            catch (Exception e) {e.printStackTrace();}
+        } catch (IOException e) {e.printStackTrace();}
+
+        System.out.println("[INFO] Triggered haptic feedback actuators");
+    }
+
     // before, check if map.get() != null (if exists)
     // pdp.evaluate() diventa PermissionChecker
 }

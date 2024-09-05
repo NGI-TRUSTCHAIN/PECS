@@ -31,13 +31,13 @@ public class Administration {
         PolicyBuilder policyBuilder = new PolicyBuilder();
         PolicyValidator validator = new PolicyValidator();
 
-        File policiesDir = new File("./policies/");
+        File policiesDir = new File("/data/data/com.termux/files/home/PECS/pecsi/policies/");
         policiesDir.mkdir();
 
         String uuid = UUID.randomUUID().toString();
         String policy = policyBuilder.buildPolicy(prefs, uuid);
         if (validator.validate(this.XSD_PATH, policy)) {
-            try {savePolicy(policy, "policies/policy_" + uuid + ".xml");}
+            try {savePolicy(policy, "/data/data/com.termux/files/home/PECS/pecsi/policies/policy_" + uuid + ".xml");}
             catch (IOException e) {e.printStackTrace();}
 
             try {saveJson(path, uuid);}
@@ -68,7 +68,7 @@ public class Administration {
             mapper.writeValue(file, root);
         } catch (IOException e) {e.printStackTrace();}
 
-        try {BlockchainSender.sendPolicy(new File("./policies/policy_" + uuid + ".xml"));}
+        try {BlockchainSender.sendPolicy(new File("/data/data/com.termux/files/home/PECS/pecsi/policies/policy_" + uuid + ".xml"));}
         catch (Exception e) {e.printStackTrace();}
     }
 
@@ -85,7 +85,7 @@ public class Administration {
         String policy = policyBuilder.buildPolicy(prefs, uuid);
         if (validator.validate(this.XSD_PATH, policy)) {
             try {
-                savePolicy(policy, "policies/policy_" + uuid + ".xml");
+                savePolicy(policy, "/data/data/com.termux/files/home/PECS/pecsi/policies/policy_" + uuid + ".xml");
             }
             catch (IOException e) {e.printStackTrace();}
 
@@ -136,7 +136,7 @@ public class Administration {
             mapper.writeValue(file, root);
         } catch (IOException e) {e.printStackTrace();}
 
-        try {BlockchainSender.sendPolicy(new File("./policies/policy_" + uuid + ".xml"));}
+        try {BlockchainSender.sendPolicy(new File("/data/data/com.termux/files/home/PECS/pecsi/policies/policy_" + uuid + ".xml"));}
         catch (Exception e) {e.printStackTrace();}
     }
 
@@ -159,7 +159,7 @@ public class Administration {
             }
         }
 
-        try {prefs = mapper.readValue(new File("./policies/" + policyPath), Preferences.class);}
+        try {prefs = mapper.readValue(new File("/data/data/com.termux/files/home/PECS/pecsi/policies/" + policyPath), Preferences.class);}
         catch (IOException e) {e.printStackTrace();}
 
         return prefs;
@@ -171,13 +171,13 @@ public class Administration {
 
     public static void saveJson(String path, String uuid) throws IOException {
         Path src = Paths.get(path);
-        Path dst = Paths.get("policies/policy_" + uuid + ".json");
+        Path dst = Paths.get("/data/data/com.termux/files/home/PECS/pecsi/policies/policy_" + uuid + ".json");
 
         try {Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);}
         catch (Exception e) {e.printStackTrace();}
     }
 
-    private final String LIST_PATH = "policiesList.json";
-    private final String XSD_PATH = "schema.xsd";
+    private final String LIST_PATH = "/data/data/com.termux/files/home/PECS/pecsi/policiesList.json";
+    private final String XSD_PATH = "/data/data/com.termux/files/home/PECS/pecsi/schema.xsd";
     private String POLICY_PATH;
 }

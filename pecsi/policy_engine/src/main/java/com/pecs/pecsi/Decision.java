@@ -76,14 +76,14 @@ public class Decision {
     }
 
     private static void saveResponse(ObjectNode root) throws IOException {
-        File responsesDir = new File("./responses/");
+        File responsesDir = new File("/data/data/com.termux/files/home/PECS/pecsi/responses/");
 
         if (!responsesDir.exists()) responsesDir.mkdir();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            File file = new File("./responses/response_" + UUID.randomUUID().toString() + ".json");
+            File file = new File("/data/data/com.termux/files/home/PECS/pecsi/responses/response_" + UUID.randomUUID().toString() + ".json");
             mapper.writeValue(file, root);
         }
         catch (IOException e) {e.printStackTrace();}
