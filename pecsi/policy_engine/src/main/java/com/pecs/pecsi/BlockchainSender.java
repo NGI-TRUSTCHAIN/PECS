@@ -88,11 +88,11 @@ public final class BlockchainSender {
 
 		try{
 			KeyStore keyStore = KeyStore.getInstance("JKS");
-			keyStore.load(new FileInputStream("../pecs-ds/sender_keystore.jks"), pass);
+			keyStore.load(new FileInputStream("/data/data/com.termux/files/home/PECS/pecs-ds/sender_keystore.jks"), pass);
 			
 			privateKey = (PrivateKey) keyStore.getKey("senderKeyPair", pass);
 			
-			keyStore.load(new FileInputStream("../pecs-ds/receiver_keystore.jks"), pass);
+			keyStore.load(new FileInputStream("/data/data/com.termux/files/home/PECS/pecs-ds/receiver_keystore.jks"), pass);
 
 			Certificate certificate = keyStore.getCertificate("receiverKeyPair");
 			publicKey = certificate.getPublicKey();

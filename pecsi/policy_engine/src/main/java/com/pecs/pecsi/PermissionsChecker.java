@@ -206,7 +206,7 @@ public class PermissionsChecker implements Runnable {
 
     private static void setupCanInterface() {
         // eventually insert echo *
-        String[] comm = {"/system/bin/sh", "-c", "ip link set can0 type can bitrate 50000 | su && ip link set dev can0 txqueuelen 10000 | su && ip link set up can0 | su"};
+        String[] comm = {"/system/bin/sh", "-c", "echo \"ip link set can0 type can bitrate 50000\" | su && echo \"ip link set dev can0 txqueuelen 10000\" | su && echo \"ip link set up can0\" | su"};
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(comm);
