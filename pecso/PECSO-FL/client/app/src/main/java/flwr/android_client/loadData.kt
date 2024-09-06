@@ -116,62 +116,24 @@ fun NormalizeSample(input: FeatureArray): FeatureArray {
 }
 
 fun ReadEngineDataJSON(jsonString: String): FeatureArray {
-    //val jsonArray = JSONArray(jsonString)
     val jsonObj = JSONObject(jsonString)
     var result = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
-    val engineData = jsonObj.getJSONArray("engineData")
-    for (j in 0 until engineData.length()) {
-        val dataItem = engineData.getJSONObject(j)
-        if (dataItem.getString("name") == "maf-pressure") {
-            result[0] = dataItem.getDouble("value").toFloat()
-            Log.d("D", "Got maf-pressure: ${result[0]}")
-        }
-        else if (dataItem.getString("name") == "throttle-position") {
-            result[1] = dataItem.getDouble("value").toFloat()
-            Log.d("D", "Got throttle-position: ${result[1]}")
-        }
-        else if (dataItem.getString("name") == "???? Force") {
-            result[2] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "???? Power") {
-            result[3] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "rpm") {
-            result[4] = dataItem.getDouble("value").toFloat()
-            Log.d("D", "Got rpm: ${result[4]}")
-        }
-        else if (dataItem.getString("name") == "???? Consumption L/H") {
-            result[5] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "???? Consumption L/100KM") {
-            result[6] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "vehicle-speed") {
-            result[7] = dataItem.getDouble("value").toFloat()
-            Log.d("D", "Got vehicle-speed: ${result[7]}")
-        }
-        else if (dataItem.getString("name") == "???? CO") {
-            result[8] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "???? HC") {
-            result[9] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "???? CO2") {
-            result[10] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "O2-sensors") {
-            result[11] = dataItem.getDouble("value").toFloat()
-            Log.d("D", "Got O2-sensors: ${result[11]}")
-        }
-        else if (dataItem.getString("name") == "???? Lambda") {
-            result[12] = dataItem.getDouble("value").toFloat()
-        }
-        else if (dataItem.getString("name") == "air-fuel-ratio") {
-            result[13] = dataItem.getDouble("value").toFloat()
-            Log.d("D", "Got air-fuel-ratio: ${result[13]}")
-
-        }
-    }
+    val engineData = jsonObj.getJSONObject("engineData")
+    result[0] = engineData.optDouble("maf-pressure", 0.0).toFloat()
+    result[1] = engineData.optDouble("throttle-position", 0.0).toFloat()
+    result[2] = engineData.optDouble("???? Force", 0.0).toFloat()
+    result[3] = engineData.optDouble("???? Power", 0.0).toFloat()
+    result[4] = engineData.optDouble("rpm", 0.0).toFloat()
+    result[5] = engineData.optDouble("???? Consumption L/H", 0.0).toFloat()
+    result[6] = engineData.optDouble("???? Consumption L/100KM", 0.0).toFloat()
+    result[7] = engineData.optDouble("vehicle-speed", 0.0).toFloat()
+    result[8] = engineData.optDouble("???? CO", 0.0).toFloat()
+    result[9] = engineData.optDouble("???? HC", 0.0).toFloat()
+    result[10] = engineData.optDouble("???? CO2", 0.0).toFloat()
+    result[11] = engineData.optDouble("O2-sensors", 0.0).toFloat()
+    result[12] = engineData.optDouble("???? Lambda", 0.0).toFloat()
+    result[13] = engineData.optDouble("air-fuel-ratio", 0.0).toFloat()
+    Log.d("test", result[7].toString() + " " + result[1].toString())
     return result
 }
 
