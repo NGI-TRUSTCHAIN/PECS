@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-07-18T09:21:15" hostname="DESKTOP-R1N372L" time="4.74">
+<testsuite name="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-09-06T11:36:06" hostname="DESKTOP-R1N372L" time="3.494">
   <properties/>
-  <testcase name="invokeGetAllAssetsTransaction()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest" time="4.7"/>
-  <testcase name="invokeUnknownTransaction()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest" time="0.035"/>
+  <testcase name="invokeGetAllAssetsTransaction()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest" time="3.443"/>
+  <testcase name="invokeUnknownTransaction()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTransferTest" time="0.046"/>
   <system-out><![CDATA[Asset@ea4b8ed6 [privacyPolicy=privacyPolicy1, digestPrivacyPolicy=digestPrivacyPolicy1, publicKey=publicKey1]
 Asset@ea4b92b7 [privacyPolicy=privacyPolicy2, digestPrivacyPolicy=digestPrivacyPolicy2, publicKey=publicKey2]
 ]]></system-out>

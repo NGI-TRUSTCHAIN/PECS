@@ -57,7 +57,8 @@ public final class AssetTransfer implements ContractInterface {
         if (AssetExists(ctx, privacyPolicy)) {
             String errorMessage = String.format("Asset %s already exists", privacyPolicy);
             System.out.println(errorMessage);
-            throw new ChaincodeException(errorMessage, AssetTransferErrors.ASSET_ALREADY_EXISTS.toString());
+            //throw new ChaincodeException(errorMessage, AssetTransferErrors.ASSET_ALREADY_EXISTS.toString());
+            return null;
         }
 
         Asset asset = new Asset(privacyPolicy, digestPrivacyPolicy, publicKey);

@@ -52,9 +52,12 @@ public final class App {
 	private static final String MSP_ID = System.getenv().getOrDefault("MSP_ID", "Org1MSP");
 	private static final String CHANNEL_NAME = System.getenv().getOrDefault("CHANNEL_NAME", "mychannel");
 	private static final String CHAINCODE_NAME = System.getenv().getOrDefault("CHAINCODE_NAME", "basic");
-	
+	private static String signatureString;
+	private static PublicKey publicKey;
+	private static PrivateKey privateKey;
+
 	// Path to crypto materials.
-	private static final Path CRYPTO_PATH = Paths.get("../../network/organizations/peerOrganizations/org1.example.com");
+	private static final Path CRYPTO_PATH = Paths.get("../../test-network/organizations/peerOrganizations/org1.example.com");
 	// Path to user certificate.
 	private static final Path CERT_DIR_PATH = CRYPTO_PATH.resolve(Paths.get("users/User1@org1.example.com/msp/signcerts"));
 	// Path to user private key directory.
@@ -69,6 +72,27 @@ public final class App {
 	private final Contract contract;
 	private final String hashPrivacyPolicy = "asset" + Instant.now().toEpochMilli();
 	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+	/*private static void keys_init(){
+		try {
+			SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
+			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA", "SUN");
+
+			keyGen.initialize(1024, random);
+
+			KeyPair pair = keyGen.generateKeyPair();
+			PrivateKey priv = pair.getPrivate();
+			PublicKey pub = pair.getPublic();
+
+			privateKey = priv;
+			publicKey = pub;
+		}
+
+		catch (Exception e) {
+			System.err.println("Caught exception " + e.toString());
+		}
+
+	}*/
 
 	public static void openConnection(Path privacyPolicyFileName) throws Exception{
 		// The gRPC client connection should be shared by all Gateway connections to
@@ -102,6 +126,7 @@ public final class App {
 		}		
 
 		for (;;) {
+
 			// wait for key to be signaled
 			WatchKey key;
 			try {
@@ -113,6 +138,11 @@ public final class App {
 			for (WatchEvent<?> event: key.pollEvents()) {
 				WatchEvent.Kind<?> kind = event.kind();
 		
+				// This key is registered only
+				// for ENTRY_CREATE events,
+				// but an OVERFLOW event can
+				// occur regardless if events
+				// are lost or discarded.
 				if (kind == StandardWatchEventKinds.OVERFLOW) {
 					continue;
 				}
@@ -122,8 +152,9 @@ public final class App {
 
 				System.out.println("New file " + privacyPolicyFileName);
 		
-				// Verify that the new file is a json file
-				try {					
+				// Verify that the new file is a xml file
+				try {
+					
 					Path child = dir.resolve(privacyPolicyFileName);
 					if (!Files.probeContentType(child).equals("application/json")) {
 						System.err.format("New file '%s'" +
@@ -190,6 +221,9 @@ public final class App {
 	}
 
 	public void run(Path privacyPolicyFileName) throws GatewayException, CommitException {
+		// Initialise digital signatures keys
+		//keys_init();
+
 		// Create a new asset on the ledger.
 		createAsset(privacyPolicyFileName);
 
@@ -199,7 +233,87 @@ public final class App {
 		// Get the asset details by assetID.
 		//readAssetById();
 	}
-		
+	
+	public static String get_signature(){
+		return signatureString;
+	}
+
+	public static String get_publicKey(){
+		byte[] byte_pubkey = publicKey.getEncoded();
+		String str_key = Base64.getEncoder().encodeToString(byte_pubkey);
+
+		return str_key;
+	}
+
+	public static void securing_policy(String path){
+		try {
+			Signature dsa = Signature.getInstance("SHA1withDSA", "SUN"); 
+			dsa.initSign(privateKey);
+			
+			FileInputStream fis = new FileInputStream(path);
+			BufferedInputStream bufin = new BufferedInputStream(fis);
+			byte[] buffer = new byte[1024];
+			int len;
+			while ((len = bufin.read(buffer)) >= 0) {
+    			dsa.update(buffer, 0, len);
+			};
+			bufin.close();
+
+			byte[] realSig = dsa.sign();
+
+			String s = new String(realSig, StandardCharsets.UTF_8);
+			System.out.println("DSA Signature " + s);
+			
+			signatureString = s;
+
+			// verify signature...
+
+			} 
+			catch (Exception e) {
+				System.err.println("Caught exception " + e.toString());
+			}
+			
+		}
+
+	public void pecs_ds(Path policyPath){
+		char[] pass = ("changeit").toCharArray();
+
+		try{
+			KeyStore keyStore = KeyStore.getInstance("JKS");
+			keyStore.load(new FileInputStream("sender_keystore.jks"), pass);
+			
+			privateKey = (PrivateKey) keyStore.getKey("senderKeyPair", pass);
+			
+			keyStore.load(new FileInputStream("receiver_keystore.jks"), pass);
+
+			Certificate certificate = keyStore.getCertificate("receiverKeyPair");
+			publicKey = certificate.getPublicKey();
+
+			Signature signature = Signature.getInstance("MD5withRSA");
+			signature.initSign(privateKey);
+
+			byte[] messageBytes = Files.readAllBytes(policyPath);
+			
+			signature.update(messageBytes);
+
+			byte[] digitalSignature = signature.sign();
+			String s = new String(digitalSignature, StandardCharsets.UTF_8);
+
+			signatureString = Base64.getEncoder().encodeToString(digitalSignature);
+			
+			//verification
+
+			/*signature.initVerify(publicKey);
+			signature.update(messageBytes);
+			boolean isCorrect = signature.verify(digitalSignature);
+
+			System.out.println("Verification " + isCorrect);
+			*/
+
+		}
+		catch (Exception e) {e.printStackTrace(System.out);}
+	}
+
 	/**
 	 * Evaluate a transaction to query ledger state.
 	 */
@@ -225,34 +339,38 @@ public final class App {
 	 */
 	private void createAsset(Path privacyPolicyFileName) throws EndorseException, SubmitException, CommitStatusException, CommitException {
 		String privacyPolicy = "";
+		String stringHash = "";
 		
 		String privacyPolicyEncoded = ""; 
 		String signature = ""; 
-		String pubKey = ""; 
+		String pubKey = "";
 
 		try {
 			File privacyPolicyFile = new File(privacyPolicyFileName.toString());
 			privacyPolicy = FileUtils.readFileToString(privacyPolicyFile, StandardCharsets.UTF_8);
 			
-			System.out.println("\n--> Submit Transaction: CreateAsset, submit new privacy asset to the blockchain");
+			System.out.println("\n--> Submit Transaction: CreateAsset, creates new privacy policy ID, and privacy policy hash");
 			
+			//pecs_ds(privacyPolicyFileName);
+			/*String signature = get_signature();
+			String pubKey = get_publicKey(); */
+			//privacyPolicyEncoded = Base64.getEncoder().encodeToString(privacyPolicy.getBytes());
+
 			JSONParser jsonParser = new JSONParser();
       		try {
-
          		//Parsing the contents of the JSON file
-         		JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("./"+privacyPolicyFileName));
+         		JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("test.json"));
          		privacyPolicy = (String) jsonObject.get("privacy_policy");
          		signature = (String) jsonObject.get("digital_signature");
          		pubKey = (String) jsonObject.get("pubkey");
          
         	} catch (ParseException | IOException e) {
-            	e.printStackTrace();
-      		} 
+            e.printStackTrace();
+      } 
 
 			contract.submitTransaction("CreateAsset", privacyPolicy, signature, pubKey);
 
 			System.out.println("*** Transaction committed successfully");	
-			
 			privacyPolicyFile.delete();	
 		}
 
