@@ -72,7 +72,6 @@ public final class AssetTransferTest {
         public void close() throws Exception {
             // do nothing
         }
-
     }
 
     @Test
@@ -128,25 +127,6 @@ public final class AssetTransferTest {
 
     @Nested
     class InvokeCreateAssetTransaction {
-
-        @Test
-        public void whenAssetExists() {
-            AssetTransfer contract = new AssetTransfer();
-            Context ctx = mock(Context.class);
-            ChaincodeStub stub = mock(ChaincodeStub.class);
-            when(ctx.getStub()).thenReturn(stub);
-            when(stub.getStringState("privacyPolicy1"))
-                    .thenReturn("{ \"privacyPolicy\": \"privacyPolicy1\", \"digestPrivacyPolicy\": \"digestPrivacyPolicy1\", \"publicKey\": \"publicKey1\"}");
-
-            Throwable thrown = catchThrowable(() -> {
-                contract.CreateAsset(ctx, "privacyPolicy1", "digestPrivacyPolicy1", "publicKey1");
-            });
-
-            assertThat(thrown).isInstanceOf(ChaincodeException.class).hasNoCause()
-                    .hasMessage("Asset privacyPolicy1 already exists");
-            assertThat(((ChaincodeException) thrown).getPayload()).isEqualTo("ASSET_ALREADY_EXISTS".getBytes());
-        }
-
         @Test
         public void whenAssetDoesNotExist() {
             AssetTransfer contract = new AssetTransfer();

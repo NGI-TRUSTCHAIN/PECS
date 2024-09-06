@@ -1,4 +1,3 @@
 	nAsset@ea4b8ed6 [privacyPolicy=privacyPolicy1, digestPrivacyPolicy=digestPrivacyPolicy1, publicKey=publicKey1]
 	nAsset@ea4b92b7 [privacyPolicy=privacyPolicy2, digestPrivacyPolicy=digestPrivacyPolicy2, publicKey=publicKey2]
-$Asset privacyPolicy1 already exists
-$Asset privacyPolicy1 does not exist
+$Asset privacyPolicy1 does not exist

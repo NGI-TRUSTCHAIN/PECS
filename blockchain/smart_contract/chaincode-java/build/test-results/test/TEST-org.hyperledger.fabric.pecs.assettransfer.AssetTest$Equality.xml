@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" tests="6" skipped="0" failures="0" errors="0" timestamp="2024-07-18T09:21:14" hostname="DESKTOP-R1N372L" time="0.405">
+<testsuite name="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" tests="6" skipped="0" failures="0" errors="0" timestamp="2024-09-06T11:36:05" hostname="DESKTOP-R1N372L" time="0.356">
   <properties/>
-  <testcase name="handlesOtherObjects()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.373"/>
+  <testcase name="handlesOtherObjects()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.318"/>
   <testcase name="isReflexive()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.003"/>
-  <testcase name="isTransitive()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.007"/>
-  <testcase name="handlesInequality()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.002"/>
-  <testcase name="isSymmetric()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.002"/>
-  <testcase name="handlesNull()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.002"/>
+  <testcase name="isTransitive()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.002"/>
+  <testcase name="handlesInequality()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.005"/>
+  <testcase name="isSymmetric()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.003"/>
+  <testcase name="handlesNull()" classname="org.hyperledger.fabric.pecs.assettransfer.AssetTest$Equality" time="0.006"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
