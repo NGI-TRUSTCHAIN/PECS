@@ -14,9 +14,11 @@ import java.util.concurrent.TimeUnit;
 import java.security.cert.Certificate;
 
 import java.io.*;
-// import org.apache.commons.lang3.StringEscapeUtils;
 import java.security.*;
 
+/**
+ * Component for blockchain data preparation
+ */
 @SuppressWarnings("unused")
 public final class BlockchainSender {
     private static String signatureString;
@@ -25,6 +27,9 @@ public final class BlockchainSender {
 
     // Gateway peer end point.
 
+    /**
+     * Initializes keys
+     */
     private static void keys_init(){
         try {
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
@@ -46,6 +51,11 @@ public final class BlockchainSender {
 
     }
 
+    /**
+     * Send privacy policy data to prepare them for blockchain uploading
+     * @param policy Privacy policy XML file path
+     * @throws Exception If errors occur while reading policy file
+     */
     public static void sendPolicy(File policy) throws Exception {
         keys_init();
         
@@ -70,11 +80,18 @@ public final class BlockchainSender {
     }
 
 
-    
+    /**
+     * 
+     * @return String representation of digital signature
+     */
     public static String get_signature(){
         return signatureString;
     }
 
+    /**
+     * 
+     * @return String representation of public key
+     */
     public static String get_publicKey(){
         byte[] byte_pubkey = publicKey.getEncoded();
         String str_key = Base64.getEncoder().encodeToString(byte_pubkey);

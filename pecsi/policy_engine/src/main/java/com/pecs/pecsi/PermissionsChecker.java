@@ -22,9 +22,15 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pecs.pecsi.Preferences.UserPreferences.AppSpecific;
 
+/**
+ * Java Runnable implementation of component responsible to perform Android permissions check rounds (case-specific PDP)
+ */
 @SuppressWarnings("unused")
 public class PermissionsChecker implements Runnable {
 
+    /**
+     * Launch the Runnable component
+     */
     @Override
     public void run() {
         HashMap<String, String> alertMap = new HashMap<String, String>();
@@ -158,6 +164,10 @@ public class PermissionsChecker implements Runnable {
         }
     }
 
+    /**
+     * Send privacy violations JSON to frontend (shared directory)
+     * @param root Root of JSON object to send
+     */
     private static void sendResponseToFrontend(ObjectNode root) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -168,6 +178,10 @@ public class PermissionsChecker implements Runnable {
         catch (IOException e) {e.printStackTrace();}
     }
 
+    /**
+     * Write privacy violations JSON to file
+     * @param root Root of JSON object to send
+     */
     private static void saveResponse(ObjectNode root) {
         File responsesDir = new File("/data/data/com.termux/files/home/PECS/pecsi/responses/");
 
@@ -182,6 +196,11 @@ public class PermissionsChecker implements Runnable {
         catch (IOException e) {e.printStackTrace();}
     }
 
+    /**
+     * Method to adjust shell commands output strings
+     * @param s Input string
+     * @return Adjusted and usable string
+     */
     private static String adjust(String s) {
         String[] parts = s.split("[_]");
         
@@ -197,6 +216,11 @@ public class PermissionsChecker implements Runnable {
         return result.toString();
     }
 
+    /**
+     * Method to clean shell commands output strings
+     * @param s Input string
+     * @return Cleaned up string
+     */
     private static String clean(String s) {
         int i = s.indexOf(':');
         if (i != -1) return s.substring(0, i);
@@ -204,6 +228,9 @@ public class PermissionsChecker implements Runnable {
         return s;
     }
 
+    /**
+     * Static method to setup CAN interface
+     */
     private static void setupCanInterface() {
         // eventually insert echo *
         String[] comm = {"/system/bin/sh", "-c", "echo \"ip link set can0 type can bitrate 50000\" | su && echo \"ip link set dev can0 txqueuelen 10000\" | su && echo \"ip link set up can0\" | su"};
@@ -220,6 +247,9 @@ public class PermissionsChecker implements Runnable {
         System.out.println("[INFO] CAN interface setup completed");
     }
 
+    /**
+     * Once invocated, triggers vehicle haptic feedback and log when it is performed
+     */
     private static void hapticFeedback() {
         String[] comm = {"/system/bin/sh", "-c", "cansend can0 0D5#5649425241"};
 
@@ -234,7 +264,4 @@ public class PermissionsChecker implements Runnable {
 
         System.out.println("[INFO] Triggered haptic feedback actuators");
     }
-
-    // before, check if map.get() != null (if exists)
-    // pdp.evaluate() diventa PermissionChecker
 }

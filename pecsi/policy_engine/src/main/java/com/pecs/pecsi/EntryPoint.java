@@ -24,8 +24,17 @@ import java.util.logging.SimpleFormatter;
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
 
+
+/**
+ * Pre-configured entry point for PECSi Service (running the PECSi JAR)
+ */
 @SuppressWarnings("unused")
 public class EntryPoint {
+
+    /**
+     * main() function
+     * @param args No command line arguments needed
+     */
     public static void main(String[] args) {
         Administration pap = new Administration();
         Decision pdp = new Decision();
@@ -90,7 +99,18 @@ public class EntryPoint {
         } catch (Exception e) {e.printStackTrace();}
     }
 
+    /**
+     * Chosen path to receive JSON representation of user preferences from frontend
+     */
     private static String prefsPath = "/data/data/com.termux/files/home/storage/downloads/";
+
+    /**
+     * WatchService object needed for directory events monitoring
+     */
     private static WatchService watch = null;
+
+    /**
+     * Path object referring to prefsPath
+     */
     private static Path prefsDir = null;
 }

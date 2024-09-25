@@ -4,7 +4,15 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Class to represent possible permissions that user can give
+ */
 public class Permissions {
+
+    /**
+     * Engine data specific permissions class
+     */
     public static class EngineData {
         public static final String FUEL_SYSTEM = "fuel-system";
         public static final String ENGINE_LOAD = "engine-load";
@@ -30,6 +38,9 @@ public class Permissions {
         public static final String NOX_SENSOR = "nox-sensor";
     }
 
+    /**
+     * Android permissions specific permissions class
+     */
     public static class Data {
         public static final String READ_CALENDAR = "read-calendar";
         public static final String WRITE_CALENDAR = "write-calendar";
@@ -59,6 +70,11 @@ public class Permissions {
         public static final String VOICE_INTERACTION = "voice-interaction";
     }
 
+    /**
+     * Get the class constants
+     * @param c Class name
+     * @return List of class constants
+     */
     private static List<String> getConsts(Class<?> c) {
         List<String> consts = new ArrayList<>();
         Field[] fields = c.getDeclaredFields();
@@ -71,10 +87,18 @@ public class Permissions {
         return consts;
     }
 
+    /**
+     * Get the list of engine data
+     * @return String list of engine data
+     */
     public static List<String> getEngineDataList() {
         return getConsts(EngineData.class);
     }
 
+    /**
+     * Get the list of Android permissions
+     * @return String list of Android permissions
+     */
     public static List<String> getDataList() {
         return getConsts(Data.class);
     }

@@ -8,11 +8,20 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/**
+ * Privacy Policy builder engine (XACML 3.0 compliant)
+ */
 @SuppressWarnings("unused")
 public class PolicyBuilder {
+
+    /**
+     * Build a new XACML 3.0 compliant privacy policy based on user preferences
+     * @param prefs Preferences mapped object representing user choices
+     * @param id UUIDv4 assigned to the policy
+     * @return XML generated policy
+     */
     public String buildPolicy(Preferences prefs, String id) {
         StringBuilder policy = new StringBuilder();
-
         Map<String, Boolean> globals = prefs.getPreferences().getGlobals().getPrefs();
         Map<String, Boolean> enginePrefs = prefs.getPreferences().getEngineDataPrefs();
         List<String> dataList = Permissions.getDataList();

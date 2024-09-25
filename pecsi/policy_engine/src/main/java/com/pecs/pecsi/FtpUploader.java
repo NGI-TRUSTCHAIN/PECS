@@ -14,9 +14,19 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/**
+ * Utility class to upload new policies to blockchain FTP server
+ */
 @SuppressWarnings("unused")
 public class FtpUploader {
-    public boolean send(String encodedPolicy, String ds, String pubKey) {
+
+    /**
+     * Upload privacy policy, digital signature and public key to FTP server
+     * @param encodedPolicy base64 encoding of privacy policy
+     * @param ds Digital signature
+     * @param pubKey Public key (its string representation)
+     */
+    public void send(String encodedPolicy, String ds, String pubKey) {
         String serverUrl = ""; // insert FTP server URL here
         int port = 0; // insert port here
         String username = ""; // insert username
@@ -46,8 +56,6 @@ public class FtpUploader {
                 }
             } catch (IOException e) {e.printStackTrace();}
         }
-
-        return true;
     }
 
     private String getTempPath() {

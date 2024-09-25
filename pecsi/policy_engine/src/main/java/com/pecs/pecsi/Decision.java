@@ -16,8 +16,18 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+
+/**
+ * Policy Decision component (PDP)
+ */
 @SuppressWarnings("unused")
 public class Decision {
+
+    /**
+     * Evaluate a mapped Request object in front of a Preferences object
+     * @param policy Preferences object representing user privacy policy
+     * @param req Request object representing the data access request
+     */
     public void evaluate(Preferences policy, Request req) {
         boolean check = false;
         List<String> dataList = Permissions.getDataList();
@@ -75,6 +85,11 @@ public class Decision {
         catch (IOException e) {e.printStackTrace();}
     }
 
+    /**
+     * Write potential privacy violation JSON file
+     * @param root Root of the JSON object
+     * @throws IOException If errors occur while writing the file
+     */
     private static void saveResponse(ObjectNode root) throws IOException {
         File responsesDir = new File("/data/data/com.termux/files/home/PECS/pecsi/responses/");
 
