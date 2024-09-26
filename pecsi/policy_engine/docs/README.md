@@ -10,15 +10,17 @@ Please note: for detailed API JavaDoc documentation, please clone the repository
 
 **JVM-based languages usage note:** As normal Java code, this library can be used in Kotlin programs (especially for PECSi implementation in Android apps) and if desired also in Scala ones. Please refer to https://kotlinlang.org/docs/java-interop.html and https://docs.scala-lang.org/scala3/book/interacting-with-java.html for Kotlin and Scala inter-operability, respectively.
 
+**Publication:** this library can be published to a public Java libraries repository, such as Maven Central or Google Maven Repository, so developers can easily import this library in their project and integrate it in build systems such as Maven or Gradle.
+
 ### Use of XACML 3.0 standard
 
-For privacy policies operations, this library follows the OASIS XACML 3.0 standard. This can be seen on the generation of XML documents representing privacy policies and on the base architecture that will be described in the next paragraph.
+For privacy policies operations, this library follows the OASIS XACML 3.0 standard. This can be seen on the generation of XML documents representing privacy policies and on the components that will be described in the next paragraph.
 
-## Base PECSi Service architecture
+## Main components
 
-Architecture diagram will be inserted here
-
-<!-- insert also client side in diagram -->
+- Policy Administration Point (PAP): generates and enforces policies, beyond keeping log of every privacy policy that has been enforced in the system
+- Policy Decision Point (PDP): generates and logs JSON reports on potential privacy violations. In particular, this library exposes two differents kind of APIs for this work, one for Android specific use case and the other for generic use. We will delve deeper into these aspects in the next paragraphs
+- Policy Retrieval Point (PRP): manages and retrieves privacy policy presets files to generate new policies
 
 ## Privacy violations check
 
@@ -37,11 +39,13 @@ In the context of the PECS project, we developed this library specifically for A
 initialize pecsi service
 initialize pap and pdp -->
 
-### Essential components diagram
+### Base flow diagram
 
-#### Android implementation
+The diagram below shows the essential parts and data flows that a correct implementation of the PECSi Policy Engine must have.
 
-#### Generic implementation
+
+
+<!-- insert flows for android and generic scenarios -->
 
 
 
