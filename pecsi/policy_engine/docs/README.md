@@ -28,16 +28,39 @@ In this chapter we will discuss about how to use exposed APIs to perform privacy
 
 ### Android scenario
 
-In the context of the PECS project, we developed this library specifically for Android use case. In particular, Android applications developers can use it to implement privacy policies operations.
+In the context of the PECS project, we developed this library specifically for Android use case. In particular, Android applications developers can use it to implement privacy policies operations. We can schematize how the PECSi Service (integrating with a PECSi Client) works in 6 phases which are repeated cyclically:
 
+(every point will be explained more in detail)
+- User Interaction
+- Policy Generation
+- Policy Enforcement
+- Application Permissions Check
+- Alerts Generation and Logging
+- User Interaction
 
 ### Generic scenario using Request object
+
+Although the PECSi Policy Engine was specifically designed and developed for Android Architecture, we additionally designed some parts so that them can be used to implement privacy operations in other operating systems such as desktop Linux / Windows. The main components that can be used in order to perform such operations are Request and Decision objects. They represent a data access request a general purpose PDP (see above), respectively.
 
 ## Practical PECSi Service implementation
 
 <!-- importing
 initialize pecsi service
 initialize pap and pdp -->
+
+### Importing PECSi Policy Engine into your project
+
+In order to use PECSi in your JVM-based language project (after that it has been published on a Central repository), you can import it as a dependency using a building system. Considering a Java + Maven project as an example, you can import this library declaring it as a dependency in your  Project Object Model file (`pom.xml`), using the snippet as follow:
+
+```xml
+<dependency>
+    <groupId>com.pecs</groupId>
+    <artifactId>pecsi</artifactId>
+    <version>1.1.1</version> <!-- insert current version here -->
+</dependency>
+```
+
+### Initialization of main components
 
 ### Base flow diagram
 
