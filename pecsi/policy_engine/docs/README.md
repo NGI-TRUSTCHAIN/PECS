@@ -30,13 +30,23 @@ In this chapter we will discuss about how to use exposed APIs to perform privacy
 
 In the context of the PECS project, we developed this library specifically for Android use case. In particular, Android applications developers can use it to implement privacy policies operations. We can schematize how the PECSi Service (integrating with a PECSi Client) works in 6 phases which are repeated cyclically:
 
-(every point will be explained more in detail)
-- User Interaction
-- Policy Generation
-- Policy Enforcement
-- Application Permissions Check
-- Alerts Generation and Logging
-- User Interaction
+#### User Interaction
+In the PECSi Android application, users set a privacy policy according to their needs, choosing from 6 presets or defining a custom policy.
+
+#### Policy Generation
+Based on user preferences, the PECSi Policy Engine generates and validates a XACML 3.0 compliant policy document, alongside a JSON representation of the new policy.
+
+#### Policy Enforcement
+After generating the policy document, the PECSi Service proceeds to enforce the new policy in the system, alongside saving it both in XML and JSON format and adding it to the history of privacy policies that have been created/enforced in that system.
+
+#### Application Permissions Check
+After the enforcement of the first policy, PECSi Service starts to perform application permissions check rounds. In order to do this, it checks periodically for every third-party packages, then lists granted system permissions for that packages. After that, a cross-check between these data and the enforced user policy is performed.
+
+#### Alerts Generation and Logging
+If violations are found in the previous described check, PECSi Service proceeds to generated a JSON based alert file, that is saved locally and sent to the frontend in order to inform the user, alongside triggering the vehicle haptic feedback if needed.
+
+#### User Interaction
+At this point, users can see in the PECSi App if any potential privacy violations are found and they are guided to perform actions to resolve those alerts.
 
 ### Generic scenario using Request object
 
@@ -61,12 +71,6 @@ In order to use PECSi in your JVM-based language project (after that it has been
 ```
 
 ### Initialization of main components
-
-### Base flow diagram
-
-The diagram below shows the essential parts and data flows that a correct implementation of the PECSi Policy Engine must have.
-
-
 
 <!-- insert flows for android and generic scenarios -->
 
