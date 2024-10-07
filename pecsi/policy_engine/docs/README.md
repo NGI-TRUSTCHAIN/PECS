@@ -12,6 +12,8 @@ Please note: for detailed API JavaDoc documentation, please clone the repository
 
 **Publication:** this library can be published to a public Java libraries repository, such as Maven Central or Google Maven Repository, so developers can easily import this library in their project and integrate it in build systems such as Maven or Gradle.
 
+**Pre-configured EntryPoint:** Developers can use PECSi in 2 ways: using the pre-configured JAR file and the PECSi App, fully tested by the PECS team, or implement their own data flow using the APIs that this SDK exposes.
+
 ### Use of XACML 3.0 standard
 
 For privacy policies operations, this library follows the OASIS XACML 3.0 standard. This can be seen on the generation of XML documents representing privacy policies and on the components that will be described in the next paragraph.
@@ -51,12 +53,11 @@ At this point, users can see in the PECSi App if any potential privacy violation
 ### Generic scenario using Request object
 
 Although the PECSi Policy Engine was specifically designed and developed for Android Architecture, we additionally designed some parts so that them can be used to implement privacy operations in other operating systems such as desktop Linux / Windows. The main components that can be used in order to perform such operations are Request and Decision objects. They represent a data access request a general purpose PDP (see above), respectively.
+Request object can be easily mapped from a JSON file representing a data access request (e.g.n using the Jackson library).
 
-## Practical PECSi Service implementation
+## Practical Android PECSi Service implementation
 
-<!-- importing
-initialize pecsi service
-initialize pap and pdp -->
+In this section we will cover the fundamental steps to a basic use of PECSi SDK. Starting from this entry point, there are virtually no limits to the level of customization of the control of privacy policy operations.
 
 ### Importing PECSi Policy Engine into your project
 
@@ -70,10 +71,23 @@ In order to use PECSi in your JVM-based language project (after that it has been
 </dependency>
 ```
 
+Subsequently, you can import PECSi in project files header:
+
+```java
+import com.pecs.pecsi.*; // import every PECSi component
+```
+
 ### Initialization of main components
 
-<!-- insert flows for android and generic scenarios -->
+```java
+Administration pap = new Administration();
+FtpUploader ftp = new FtpUploader();
+PermissionsChecker checker = new PermissionsChecker();
+PolicyValidator validator = new PolicyValidator();
 
+Thread checkerThread = new Thread(checker); // create a new thread for permissions checker
+checkerThread.start();
+```
 
 
 
