@@ -34,7 +34,7 @@ def main():
     )
 
     try:
-        # Start Flower server for 10 rounds of federated learning
+        # Start Flower server for 2 rounds of federated learning
         start_server(
             server_address=f"0.0.0.0:{PORT}",
             config=ServerConfig(num_rounds=2),

@@ -60,7 +60,10 @@ suspend fun loadData(
         readAssetLines(context, "data/test_1.csv") { index, line ->
             addSample(context, flowerClient, line, false)
         }
-    } else if (device_id == 2) {
+    } else {
+        readAssetLines(context, "data/train_1.csv") { index, line ->
+            addSample(context, flowerClient, line, true)
+        }
         readAssetLines(context, "data/test_1.csv") { index, line ->
             addSample(context, flowerClient, line, false)
         }
