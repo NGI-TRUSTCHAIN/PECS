@@ -93,7 +93,7 @@ public class ArithmeticSharing {
     public static BigDecimal reconstruct(ArithmeticShare[] shares, int fractionalBits) throws IllegalArgumentException {
         final BigDecimal scaleFactor = BigDecimal.valueOf(2).pow(fractionalBits);
         BigDecimal result = new BigDecimal(reconstruct(shares));
-        return result.divide(scaleFactor);
+        return result.divide(scaleFactor, RoundingMode.HALF_UP);
     }
 
     /**

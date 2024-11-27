@@ -112,26 +112,21 @@ class MainActivity : AppCompatActivity() {
         activateFLSwitch.setOnCheckedChangeListener {_, isChecked ->
             isFLEnabled = isChecked
         }
-        if (isGrantedByUserPolicy("write-external-storage")) {
-            // Initialize the requestPermissionLauncher
-            requestPermissionLauncher = registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    Log.d("D", "Permission granted! Starting getAndPrint... [after request]")
-                    getAndPrintEngineStatus()
-                } else {
-                    Log.d("D", "Permissions not granted!")
-                    Toast.makeText(
-                        this,
-                        "Cannot look for Engine Data as permission was not granted.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        // Initialize the requestPermissionLauncher
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.d("D", "Permission granted! Starting getAndPrint... [after request]")
+                getAndPrintEngineStatus()
+            } else {
+                Log.d("D", "Permissions not granted!")
+                Toast.makeText(
+                    this,
+                    "Cannot look for Engine Data as permission was not granted.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        }
-        else {
-            Toast.makeText(this, "Permission not granted by user policy.", Toast.LENGTH_SHORT).show()
         }
         val getEngineButton: Button = findViewById(R.id.getEngineButton)
         getEngineButton.setOnClickListener {

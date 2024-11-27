@@ -286,14 +286,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         float speed = 0f;
         try {
             JSONObject jsonObj = new JSONObject(jsonString);
-            JSONArray engineData = jsonObj.getJSONArray("engineData");
-            for (int j = 0; j < engineData.length(); j++) {
-                JSONObject dataItem = engineData.getJSONObject(j);
-                String name = dataItem.getString("name");
-                if (name.equals("vehicle-speed")){
-                    speed = (float) dataItem.getDouble("value");
-                }
-            }
+            JSONObject engineData = jsonObj.getJSONObject("engineData");
+            speed = (float) engineData.getDouble("vehicle-speed");
         }
         catch (JSONException e) {
             e.printStackTrace();

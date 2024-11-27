@@ -21,6 +21,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.example.easysmpc_porting.R;
 
@@ -415,7 +416,7 @@ public class UserProcess implements MessageListener {
             list.add(new ArrayList<String>(Arrays.asList(result.name, String.valueOf(result.value))));
             Log.i("Results",result.name + " " + String.valueOf(result.value));
             BigDecimal divd = new BigDecimal("3");
-            toast("The average speed of current users is " + (result.value.divide(divd)) + " km/h!");
+            toast("The average speed of current users is " + (result.value.divide(divd, RoundingMode.HALF_UP)) + " km/h!");
             //TextView resultView = findViewById(R.id.resultView);
             //resultView.setText("The average speed of current users is " + result.value + " km/h!");
         }
